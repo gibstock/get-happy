@@ -14,6 +14,7 @@ const leaderboardHeader = document.getElementById('leaderboardHeader')
 const form = document.getElementById('leaderForm')
 const modeInput = document.getElementById('modeInput')
 const scoreInput = document.getElementById('scoreInput')
+const instructions = document.getElementById('instructions')
 const LEADERBOARD_URL = 'https://docs.google.com/spreadsheets/d/1EDHaR9mGXRL6GzFoPadh9dlbT0dqbawoGN5RRrpljBY/gviz/tq?tqx=out:json'
 const colors = ['red', 'green', 'purple', 'white', 'black', 'blue', 'pink']
 let count = 0
@@ -26,6 +27,7 @@ score.textContent = `Score: ${count}`
 
 
 const mobileStart = (timerFuncMin, timerFuncSec, difficulty, setting) => {
+  instructions.textContent = 'Use the nifty d-pad down there'
   const up = document.getElementById('up')
   const right = document.getElementById('right')
   const down = document.getElementById('down')
@@ -161,6 +163,7 @@ const mobileStart = (timerFuncMin, timerFuncSec, difficulty, setting) => {
   })
 }
 const start = (timerFuncMin, timerFuncSec, difficulty, setting) => {
+  instructions.textContent = '(Hint: drag the mouse across the square)'
   currentMode = setting
   let countdownTimer = setInterval(() => {
     if(timerFuncMin === 0 && timerFuncSec === 0) {
@@ -261,9 +264,10 @@ const loadLeaderBoard = (arr, len) => {
   highScores.style.backgroundColor = 'hsl(125, 25%, 0%)'
   highScores.style.position = 'absolute'
   highScores.style.boxSizing = 'border-box'
-  highScores.style.width = '100vw'
+  // highScores.style.width = '100vw'
   highScores.style.top = '20%'
-  highScores.style.left = 0
+  highScores.style.left = '50%'
+  highScores.style.transform = 'translateX(-50%)'
   highScores.style.flexFlow = 'column'
   highScores.style.color = 'white'
   highScores.children[1].style.listStyle = 'none'

@@ -71,6 +71,7 @@ button:hover {
 #high-scores {
   padding: 1em;
   display: none;
+  width: 100vw;
 }
 #leaderForm h3 {
   color: white;
@@ -188,5 +189,8 @@ main > p {
     width: 100%;
     justify-self: center;
     align-self: center;
+  }
+  #high-scores {
+    width: 60%;
   }
 }
