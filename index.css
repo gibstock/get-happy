@@ -3,7 +3,10 @@ body {
   padding: 0;
   box-sizing: border-box;
   width: 100%;
+  color: white;
   margin: auto;
+  background: rgb(2,0,36);
+  background: linear-gradient(142deg, rgba(2,0,36,1) 0%, rgba(9,90,121,1) 26%, rgba(5,143,179,1) 61%, rgba(0,212,255,1) 100%);
 }
 #main-wrapper {
   display: flex;
@@ -111,11 +114,14 @@ main > p {
   justify-content: center;
   align-items: center;
   position: absolute;
+  top: 0;
+  left: 0;
   width: 100vw;
   height: 100vh;
-  background-color: black;
+  background: linear-gradient(142deg, rgba(2,0,36,1) 0%, rgba(9,90,121,1) 26%, rgba(5,143,179,1) 61%, rgba(0,212,255,1) 100%);
   overflow: hidden;
   text-align: center;
+  box-sizing: border-box;
 }
 #displayBox {
   display: flex;
@@ -123,7 +129,7 @@ main > p {
   justify-content: center;
   align-items: center;
   gap: 2em;
-  background-color: wheat;
+  background: linear-gradient(142deg, rgba(2,0,36,1) 0%, rgba(121,89,9,1) 26%, rgba(5,143,179,1) 61%, rgba(0,212,255,1) 100%);
   width: 80vw;
   height: 50vh;
 }
