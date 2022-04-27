@@ -1,0 +1,355 @@
+const square = document.querySelectorAll('.grid')
+const score = document.getElementById('score')
+const minuteDisplay = document.getElementById('minuteDisplay')
+const secondDisplay = document.getElementById('secondDisplay')
+const report = document.getElementById('report')
+const displayBox = document.getElementById('displayBox')
+const play = document.getElementById('play')
+const easy = document.getElementById('easy')
+const normal = document.getElementById('normal')
+const hard = document.getElementById('hard')
+const leaderBtn = document.getElementById('leaderboard')
+const highScores = document.getElementById('high-scores')
+const leaderboardHeader = document.getElementById('leaderboardHeader')
+const form = document.getElementById('leaderForm')
+const modeInput = document.getElementById('modeInput')
+const scoreInput = document.getElementById('scoreInput')
+const LEADERBOARD_URL = 'https://docs.google.com/spreadsheets/d/1EDHaR9mGXRL6GzFoPadh9dlbT0dqbawoGN5RRrpljBY/gviz/tq?tqx=out:json'
+const colors = ['red', 'green', 'purple', 'white', 'black', 'blue', 'pink']
+let count = 0
+let scoresArray = []
+let currentMode;
+
+score.textContent = `Score: ${count}`
+
+
+
+
+const mobileStart = (timerFuncMin, timerFuncSec, difficulty, setting) => {
+  const up = document.getElementById('up')
+  const right = document.getElementById('right')
+  const down = document.getElementById('down')
+  const left = document.getElementById('left')
+  currentMode = setting
+  let countdownTimer = setInterval(() => {
+    if(timerFuncMin === 0 && timerFuncSec === 0) {
+      clearInterval(countdownTimer)
+      square.forEach((el) => {
+        if(el.textContent !== '🤩') {
+          el.style.visibility = 'hidden'
+        }
+        report.style.display = 'flex';
+        if(count <= 50) {
+          displayBox.textContent = `Meh, you got ${count} happies on ${setting} mode. Be better.`
+          displayBox.append(play)
+          
+        } else {
+          displayBox.textContent = `You got ${count} happies on ${setting} mode! Now that's happy!`
+          displayBox.append(play)
+  
+        }
+      })
+    } else if(timerFuncMin !== 0 && timerFuncSec === 0) {
+      timerFuncMin--
+      timerFuncSec = 59
+      minuteDisplay.innerText = timerFuncMin.toLocaleString('en-US', {
+        minimumIntegerDigits: 2,
+        useGrouping: false
+      })
+      secondDisplay.innerText = timerFuncSec.toLocaleString('en-US', {
+        minimumIntegerDigits: 2,
+        useGrouping: false
+      })
+    } else if(timerFuncMin >= 0 && timerFuncSec >= 0) {
+      timerFuncSec--
+      secondDisplay.innerText = timerFuncSec.toLocaleString('en-US', {
+        minimumIntegerDigits: 2,
+        useGrouping: false
+      })
+    }
+  
+  }, 1000)
+
+  
+    const colorSquare = (div) => {
+      let rnd = Math.floor(Math.random() * difficulty)
+      let colorRnd = Math.floor(Math.random() * 361)
+      let percentRnd1 = Math.floor(Math.random() * 101)
+      let percentRnd2 = Math.floor(Math.random() * 101)
+      if(div.textContent === '☹' ){
+        return;
+      } else if(div.textContent === '🤩') {
+        div.textContent = '☹'
+        count -= 1
+        score.textContent = `Score: ${count}`
+      }else if((rnd === 6 || rnd === 2) && div.textContent !== '🤩') {
+        div.textContent = '🤩'
+        count += 1
+        score.textContent = `Score: ${count}`
+      } else div.style.backgroundColor = `hsl(${colorRnd}, ${percentRnd1}%, ${percentRnd2}%)`
+    }
+  
+
+  let x = Math.floor(Math.random() * 101)
+  let mobileTarget = square[x]
+
+  right.addEventListener('click', () => {
+    if(square[x + 1] === undefined) {
+      console.log('square 99')
+      x = x - 9
+      mobileTarget = square[x]
+    }if ((x - 9) % 10 === 0) {
+      console.log('edge of the board')
+      x = x - 9
+      mobileTarget = square[x]
+    } else {
+      console.log('can go right')
+      x = x + 1
+      mobileTarget = square[x]
+    }
+    colorSquare(mobileTarget)
+  })
+
+  left.addEventListener('click', () => {
+    if(square[x - 1] === undefined) {
+      console.log('square 0')
+      x = x + 9
+      mobileTarget = square[x]
+    }if (x % 10 === 0) {
+      console.log('edge of the board')
+      x = x + 9
+      mobileTarget = square[x]
+    } else {
+      console.log('can go right')
+      x = x - 1
+      mobileTarget = square[x]
+    }
+    colorSquare(mobileTarget)
+  })
+
+  up.addEventListener('click', () => {
+    if(square[x - 10] === undefined) {
+      console.log('square 0')
+      x = x + 90
+      mobileTarget = square[x]
+    }else {
+      console.log('can go right')
+      x = x - 10
+      mobileTarget = square[x]
+    }
+    colorSquare(mobileTarget)
+  })
+
+  down.addEventListener('click', () => {
+    if(square[x + 10] === undefined) {
+      console.log('square 0')
+      x = x - 90
+      mobileTarget = square[x]
+    }else {
+      console.log('can go right')
+      x = x + 10
+      mobileTarget = square[x]
+    }
+    colorSquare(mobileTarget)
+  })
+  
+  square.forEach((el) => {
+    el.addEventListener('click', () => {
+      alert("Hey don't cheat! No clicking!")
+      window.location.href=window.location.href
+    })
+  })
+}
+const start = (timerFuncMin, timerFuncSec, difficulty, setting) => {
+  currentMode = setting
+  let countdownTimer = setInterval(() => {
+    if(timerFuncMin === 0 && timerFuncSec === 0) {
+      clearInterval(countdownTimer)
+      square.forEach((el) => {
+        if(el.textContent !== '🤩') {
+          el.style.visibility = 'hidden'
+        }
+        report.style.display = 'flex';
+        if(count <= 50) {
+          displayBox.textContent = `Meh, you got ${count} happies on ${setting} mode. Be better.`
+          displayBox.append(play)
+          
+        } else {
+          displayBox.textContent = `You got ${count} happies on ${setting} mode! Now that's happy!`
+          displayBox.append(play)
+  
+        }
+      })
+    } else if(timerFuncMin !== 0 && timerFuncSec === 0) {
+      timerFuncMin--
+      timerFuncSec = 59
+      minuteDisplay.innerText = timerFuncMin.toLocaleString('en-US', {
+        minimumIntegerDigits: 2,
+        useGrouping: false
+      })
+      secondDisplay.innerText = timerFuncSec.toLocaleString('en-US', {
+        minimumIntegerDigits: 2,
+        useGrouping: false
+      })
+    } else if(timerFuncMin >= 0 && timerFuncSec >= 0) {
+      timerFuncSec--
+      secondDisplay.innerText = timerFuncSec.toLocaleString('en-US', {
+        minimumIntegerDigits: 2,
+        useGrouping: false
+      })
+    }
+  
+  }, 1000)
+
+  square.forEach((el) => {
+    el.addEventListener('mouseover', () => {
+      let rnd = Math.floor(Math.random() * difficulty)
+      let colorRnd = Math.floor(Math.random() * 361)
+      let percentRnd1 = Math.floor(Math.random() * 101)
+      let percentRnd2 = Math.floor(Math.random() * 101)
+      if(el.textContent === '☹' ){
+        return;
+      } else if(el.textContent === '🤩') {
+        el.textContent = '☹'
+        count -= 1
+        score.textContent = `Score: ${count}`
+      }else if((rnd === 6 || rnd === 2) && el.textContent !== '🤩') {
+        el.textContent = '🤩'
+        count += 1
+        score.textContent = `Score: ${count}`
+      } else el.style.backgroundColor = `hsl(${colorRnd}, ${percentRnd1}%, ${percentRnd2}%)`
+    })
+  })
+  square.forEach((el) => {
+    el.addEventListener('click', () => {
+      alert("Hey don't cheat! No clicking!")
+      window.location.href=window.location.href
+    })
+  })
+}
+
+const loadLeaderBoard = (arr, len) => {
+  arr.sort((a, b) => {
+    return b.score - a.score
+  })
+  let closeBtn = document.createElement('span')
+  closeBtn.textContent = '❌'
+  closeBtn.style.position = 'absolute'
+  closeBtn.style.top = '1em'
+  closeBtn.style.right = '1em'
+  closeBtn.style.cursor = 'pointer'
+  highScores.style.backgroundColor = 'hsl(125, 25%, 0%)'
+  highScores.style.position = 'absolute'
+  highScores.style.boxSizing = 'border-box'
+  highScores.style.width = '100vw'
+  highScores.style.top = '20%'
+  highScores.style.left = 0
+  highScores.style.flexFlow = 'column'
+  highScores.style.color = 'white'
+  highScores.children[1].style.listStyle = 'none'
+  highScores.children[1].style.padding = 0
+  leaderboardHeader.textContent = 'Leaderboard'
+  highScores.append(closeBtn)
+  for(let i = 0; i < len; i++) {
+    let li = document.createElement('li')
+    if(i === 0) {
+      li.textContent = `#${i+1} ${arr[i].username} scored ${arr[i].score} on ${arr[i].mode} mode 👑`
+    } else {
+      li.textContent = `#${i +1} ${arr[i].username} scored ${arr[i].score} on ${arr[i].mode} mode`
+    }
+    highScores.children[1].append(li)
+  }
+  closeBtn.addEventListener('click', () => {
+    highScores.style.display = 'none'
+  })
+}
+const createObj = (obj, objLen) => {
+  for(let i = 0; i < objLen; i++) {
+    scoresArray[i] = {
+      username : obj[i].c[0].v,
+      mode: obj[i].c[1].v,
+      score: obj[i].c[2].v,
+    }
+  }
+  loadLeaderBoard(scoresArray, objLen)
+
+}
+
+const buildBoard = async () => {
+  const fetchedGoogleSheetData = fetch(LEADERBOARD_URL)
+    .then(response => response.text())
+    .then(data => {
+      let colStart = data.indexOf("cols") -2
+      const result = (JSON.parse(data.slice(colStart, data.length - 3))).rows
+      let resultLength = Object.keys(result).length // set length for dynamic variable rendering
+      
+      createObj(result, resultLength)
+
+
+    })
+
+    form.addEventListener('submit', (e) => {
+      e.preventDefault()
+      modeInput.value = currentMode
+      scoreInput.value = count
+      const userData = new FormData(form);
+
+      const action = e.target.action
+      const submitBtn = document.getElementById('submitBtn')
+      submitBtn.textContent = 'Sending...'
+      submitBtn.disabled = true
+      fetch(action, {
+        method: 'POST',
+        body: userData,
+      })
+      .then(() => {
+        alert("Added to leaderboard")
+        window.location.href=window.location.href
+      })
+    })
+}
+
+
+const leaderboardShow = () => {
+  highScores.style.display = 'flex'
+
+}
+
+leaderBtn.addEventListener('click', leaderboardShow)
+
+easy.addEventListener('click', () => {
+  easy.textContent = 'GO!'
+  normal.disabled = true
+  hard.disabled = true
+  if(/Android|Pixel|iPhone|iPad|iPod/i.test(navigator.userAgent)){
+    console.log('mobile')
+    mobileStart(2, 00, 4, 'Easy')
+  } else {
+    start(2, 00, 4, 'Easy')
+  }
+})
+normal.addEventListener('click', () => {
+  normal.textContent = 'GO!'
+  hard.disabled = true
+  easy.disabled = true
+  if(/Android|Pixel|iPhone|iPad|iPod/i.test(navigator.userAgent)){
+    mobileStart(1, 00, 7, 'Normal')
+  } else {
+    start(1, 00, 7, 'Normal')
+  }
+})
+hard.addEventListener('click', () => {
+  hard.textContent = 'GO!'
+  normal.disabled = true
+  easy.disabled = true
+  if(/Android|Pixel|iPhone|iPad|iPod/i.test(navigator.userAgent)){
+    mobileStart(0, 30, 13, 'Hard')
+  } else {
+    start(0, 30, 13, 'Hard')
+  }
+})
+
+play.addEventListener('click', () => {
+  window.location.href=window.location.href
+})
+window.addEventListener("DOMContentLoaded",buildBoard)
