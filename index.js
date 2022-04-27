@@ -1,4 +1,5 @@
 const square = document.querySelectorAll('.grid')
+const canvas = document.getElementById('canvas')
 const score = document.getElementById('score')
 const minuteDisplay = document.getElementById('minuteDisplay')
 const secondDisplay = document.getElementById('secondDisplay')
@@ -14,12 +15,15 @@ const leaderboardHeader = document.getElementById('leaderboardHeader')
 const form = document.getElementById('leaderForm')
 const modeInput = document.getElementById('modeInput')
 const scoreInput = document.getElementById('scoreInput')
+const mobileControls = document.getElementById('mobileControls')
 const instructions = document.getElementById('instructions')
 const LEADERBOARD_URL = 'https://docs.google.com/spreadsheets/d/1EDHaR9mGXRL6GzFoPadh9dlbT0dqbawoGN5RRrpljBY/gviz/tq?tqx=out:json'
 const colors = ['red', 'green', 'purple', 'white', 'black', 'blue', 'pink']
 let count = 0
 let scoresArray = []
 let currentMode;
+let currSquare;
+let prevSquare;
 
 score.textContent = `Score: ${count}`
 
@@ -27,7 +31,6 @@ score.textContent = `Score: ${count}`
 
 
 const mobileStart = (timerFuncMin, timerFuncSec, difficulty, setting) => {
-  instructions.textContent = 'Use the nifty d-pad down there'
   const up = document.getElementById('up')
   const right = document.getElementById('right')
   const down = document.getElementById('down')
@@ -36,19 +39,40 @@ const mobileStart = (timerFuncMin, timerFuncSec, difficulty, setting) => {
   let countdownTimer = setInterval(() => {
     if(timerFuncMin === 0 && timerFuncSec === 0) {
       clearInterval(countdownTimer)
+      mobileControls.style.visibility = 'hidden'
       square.forEach((el) => {
         if(el.textContent !== '🤩') {
           el.style.visibility = 'hidden'
         }
         report.style.display = 'flex';
-        if(count <= 50) {
-          displayBox.textContent = `Meh, you got ${count} happies on ${setting} mode. Be better.`
+        if(count <= 10) {
+          displayBox.textContent = `Ok, you got ${count} happies on ${setting} mode. Maybe try again.`
+          displayBox.append(play)
+
+        } else if (count <= 20) {
+          displayBox.textContent = `You got ${count} happies on ${setting} mode. Not Bad.`
+          displayBox.append(play)
+
+        }else if(count <= 50) {
+          displayBox.textContent = `You got ${count} happies on ${setting} mode! So close to a good score! Try again.`
+          displayBox.append(play)
+          
+        } else if(count <= 70) {
+          displayBox.textContent = `Holy COW! You got ${count} happies on ${setting} mode! Now that's happy! You're a HAPPY BEAST!`
+          displayBox.append(play)
+          
+        } else if(count <= 90) {
+          displayBox.textContent = `You gaming legend! You got ${count} happies on ${setting} mode! You better go tell somebody! You're a HAPPY CAMPER!`
+          displayBox.append(play)
+          
+        } else if(count === 100) {
+          displayBox.textContent = `You are a GOD. You got ${count} happies on ${setting} mode and you might be the only person to get it. Get on the leaderboard. Email me andre@knucklecuts.com`
           displayBox.append(play)
           
         } else {
-          displayBox.textContent = `You got ${count} happies on ${setting} mode! Now that's happy!`
+          displayBox.textContent = `Mind Blown. You got ${count} happies on ${setting} mode. You're elite.`
           displayBox.append(play)
-  
+
         }
       })
     } else if(timerFuncMin !== 0 && timerFuncSec === 0) {
@@ -75,9 +99,10 @@ const mobileStart = (timerFuncMin, timerFuncSec, difficulty, setting) => {
   
     const colorSquare = (div) => {
       let rnd = Math.floor(Math.random() * difficulty)
-      let colorRnd = Math.floor(Math.random() * 361)
-      let percentRnd1 = Math.floor(Math.random() * 101)
-      let percentRnd2 = Math.floor(Math.random() * 101)
+      let colorRnd = Math.floor(Math.random() * (220 - 150) + 150)
+      let percentRnd1 = Math.floor(Math.random() * (101-20) + 20)
+      let percentRnd2 = Math.floor(Math.random() * (91-20) + 20)
+      div.style.outline = '1px solid red'
       if(div.textContent === '☹' ){
         return;
       } else if(div.textContent === '🤩') {
@@ -94,18 +119,17 @@ const mobileStart = (timerFuncMin, timerFuncSec, difficulty, setting) => {
 
   let x = Math.floor(Math.random() * 101)
   let mobileTarget = square[x]
+  mobileTarget.style.outline = '1px solid red'
 
   right.addEventListener('click', () => {
+    mobileTarget.style.outline = 'none'
     if(square[x + 1] === undefined) {
-      console.log('square 99')
       x = x - 9
       mobileTarget = square[x]
     }if ((x - 9) % 10 === 0) {
-      console.log('edge of the board')
       x = x - 9
       mobileTarget = square[x]
     } else {
-      console.log('can go right')
       x = x + 1
       mobileTarget = square[x]
     }
@@ -113,16 +137,15 @@ const mobileStart = (timerFuncMin, timerFuncSec, difficulty, setting) => {
   })
 
   left.addEventListener('click', () => {
+    mobileTarget.style.outline = 'none'
+
     if(square[x - 1] === undefined) {
-      console.log('square 0')
       x = x + 9
       mobileTarget = square[x]
     }if (x % 10 === 0) {
-      console.log('edge of the board')
       x = x + 9
       mobileTarget = square[x]
     } else {
-      console.log('can go right')
       x = x - 1
       mobileTarget = square[x]
     }
@@ -130,12 +153,12 @@ const mobileStart = (timerFuncMin, timerFuncSec, difficulty, setting) => {
   })
 
   up.addEventListener('click', () => {
+    mobileTarget.style.outline = 'none'
+
     if(square[x - 10] === undefined) {
-      console.log('square 0')
       x = x + 90
       mobileTarget = square[x]
     }else {
-      console.log('can go right')
       x = x - 10
       mobileTarget = square[x]
     }
@@ -143,12 +166,12 @@ const mobileStart = (timerFuncMin, timerFuncSec, difficulty, setting) => {
   })
 
   down.addEventListener('click', () => {
+    mobileTarget.style.outline = 'none'
+
     if(square[x + 10] === undefined) {
-      console.log('square 0')
       x = x - 90
       mobileTarget = square[x]
     }else {
-      console.log('can go right')
       x = x + 10
       mobileTarget = square[x]
     }
@@ -227,9 +250,9 @@ const start = (timerFuncMin, timerFuncSec, difficulty, setting) => {
   square.forEach((el) => {
     el.addEventListener('mouseover', () => {
       let rnd = Math.floor(Math.random() * difficulty)
-      let colorRnd = Math.floor(Math.random() * 361)
-      let percentRnd1 = Math.floor(Math.random() * 101)
-      let percentRnd2 = Math.floor(Math.random() * 101)
+      let colorRnd = Math.floor(Math.random() * (220 - 150) + 150)
+      let percentRnd1 = Math.floor(Math.random() * (101-20) + 20)
+      let percentRnd2 = Math.floor(Math.random() * (91-20) + 20)
       if(el.textContent === '☹' ){
         return;
       } else if(el.textContent === '🤩') {
@@ -252,6 +275,10 @@ const start = (timerFuncMin, timerFuncSec, difficulty, setting) => {
 }
 
 const loadLeaderBoard = (arr, len) => {
+  let canvasHeight = canvas.getBoundingClientRect().height
+  let colorRnd = Math.floor(Math.random() * 361)
+  let percentRnd1 = Math.floor(Math.random() * 101)
+  let percentRnd2 = Math.floor(Math.random() * (101 - 10) + 10)
   arr.sort((a, b) => {
     return b.score - a.score
   })
@@ -262,6 +289,7 @@ const loadLeaderBoard = (arr, len) => {
   closeBtn.style.right = '1em'
   closeBtn.style.cursor = 'pointer'
   highScores.style.backgroundColor = 'hsl(125, 25%, 0%)'
+  highScores.style.height = `${canvasHeight}px`
   highScores.style.position = 'absolute'
   highScores.style.boxSizing = 'border-box'
   // highScores.style.width = '100vw'
@@ -277,10 +305,29 @@ const loadLeaderBoard = (arr, len) => {
   for(let i = 0; i < len; i++) {
     let li = document.createElement('li')
     if(i === 0) {
-      li.textContent = `#${i+1} ${arr[i].username} scored ${arr[i].score} on ${arr[i].mode} mode 👑`
+      li.innerHTML = `#${i+1} <span class="usrName">${arr[i].username}</span> scored ${arr[i].score} on ${arr[i].mode} mode 👑`
     } else {
-      li.textContent = `#${i +1} ${arr[i].username} scored ${arr[i].score} on ${arr[i].mode} mode`
+      li.innerHTML = `#${i +1} <span class="usrName">${arr[i].username}</span> scored ${arr[i].score} on ${arr[i].mode} mode`
     }
+    const usrNameClass = document.querySelectorAll('.usrName')
+    usrNameClass.forEach((span) => {
+      span.style.color = `hsl(${colorRnd}, ${percentRnd1}%, ${percentRnd2}%)`
+      if(colorRnd + 5 <= 360) {
+        colorRnd += 10
+      } else {
+        colorRnd = 0
+      }
+      if(percentRnd1 + 5 <= 100) {
+        percentRnd1 += 5
+      } else {
+        percentRnd1 = 50
+      }
+      if(percentRnd2 + 5 <= 90){
+        percentRnd2 += 5
+      } else {
+        percentRnd2 = 50
+      }
+    })
     highScores.children[1].append(li)
   }
   closeBtn.addEventListener('click', () => {
@@ -343,10 +390,10 @@ leaderBtn.addEventListener('click', leaderboardShow)
 
 easy.addEventListener('click', () => {
   easy.textContent = 'GO!'
+  easy.disabled = true
   normal.disabled = true
   hard.disabled = true
   if(/Android|Pixel|iPhone|iPad|iPod/i.test(navigator.userAgent)){
-    console.log('mobile')
     mobileStart(2, 00, 4, 'Easy')
   } else {
     start(2, 00, 4, 'Easy')
@@ -354,6 +401,7 @@ easy.addEventListener('click', () => {
 })
 normal.addEventListener('click', () => {
   normal.textContent = 'GO!'
+  normal.disabled = true
   hard.disabled = true
   easy.disabled = true
   if(/Android|Pixel|iPhone|iPad|iPod/i.test(navigator.userAgent)){
@@ -364,6 +412,7 @@ normal.addEventListener('click', () => {
 })
 hard.addEventListener('click', () => {
   hard.textContent = 'GO!'
+  hard.disabled = true
   normal.disabled = true
   easy.disabled = true
   if(/Android|Pixel|iPhone|iPad|iPod/i.test(navigator.userAgent)){

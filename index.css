@@ -28,15 +28,15 @@ aside h2 {
 }
 #easy {
   grid-column: 1/2;
-  grid-row: 2/3;
+  grid-row: 1/2;
 }
 #normal {
   grid-column: 2/3;
-  grid-row: 2/3;
+  grid-row: 1/2;
 }
 #hard {
   grid-column: 3/4;
-  grid-row: 2/3;
+  grid-row: 1/2;
 }
 #mobileControls {
   grid-column: 3/4;
@@ -55,6 +55,7 @@ button {
   border-radius: 2px;
   padding: 1em;
   background-color: hsl(200, 70%, 50%);
+  margin: 0 .5em;
 }
 button:hover {
   background-color: hsl(200, 70%, 30%);
@@ -72,6 +73,8 @@ button:hover {
   padding: 1em;
   display: none;
   width: 100vw;
+  overflow: scroll;
+  scroll-behavior: smooth;
 }
 #leaderForm h3 {
   color: white;
@@ -97,6 +100,9 @@ main > p {
 }
 #score, #countdown {
   font-size: 1.5em;
+}
+#countdown {
+  margin-bottom: 0;
 }
 
 .grid {
@@ -147,16 +153,16 @@ main > p {
   background-color: black;
 }
 #up {
-  clip-path: polygon(50% 0, 100% 100%, 0 100%);
+  clip-path: polygon(50% 0, 100% 50%, 66% 50%, 66% 100%, 33% 100%, 33% 50%, 0 50%);
 }
 #down {
-  clip-path: polygon(0 0, 100% 0, 50% 100%);
+  clip-path: polygon(33% 0, 66% 0, 66% 50%, 100% 50%, 50% 100%, 0 50%, 33% 50% );
 }
 #left {
-  clip-path: polygon(0 50%, 100% 0, 100% 100%);
+  clip-path: polygon(50% 0, 50% 33%, 100% 33%, 100% 66%, 50% 66%, 50% 100%, 0 50%);
 }
 #right {
-  clip-path: polygon(0 0, 100% 50%, 0 100%);
+  clip-path: polygon(50% 0, 100% 50%, 50% 100%, 50% 66%, 0 66%, 0 33%, 50% 33%);
 }
 @media screen and (min-width: 600px) {
   #mobileControls {
@@ -181,6 +187,7 @@ main > p {
     display: flex;
     flex-direction: column;
     padding: 1em;
+    gap: 1em;
   
   }
   #leaderboard {

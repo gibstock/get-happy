@@ -22,7 +22,7 @@
     <div id="upload">
       <form id='leaderForm'action="https://script.google.com/macros/s/AKfycby23lYQyyb4frOlVuwd-CuUaBRH3Ow1paMIdjSMU6HRjhopKjcwZJLDsGBM3MC-hIcA/exec" method="post">
         <h3>Add your score to the leaderboard</h3>
-        <input type="text" name="Username" placeholder="username">
+        <input type="text" name="Username" placeholder="username" required>
         <input id="modeInput" type="text" name="Mode" hidden>
         <input id="scoreInput" type="number" name="Score" hidden>
         <button id='submitBtn' type="submit">Submit</button>
@@ -32,18 +32,14 @@
   <div id="main-wrapper">
 
     <aside>
-      <h2>Difficulty</h2>
       <button id="easy">Easy</button>
       <ul class="diff-label">
-        <li>2 minute timer</li>
       </ul>
       <button id="normal">Normal</button>
       <ul class="diff-label">
-        <li>1 minute timer</li>
       </ul>
       <button id="hard">Hard</button>
       <ul class="diff-label">
-        <li>30 second timer</li>
       </ul>
       <input id="leaderboard" type="button" value="Click for Leaderboard">
       <div id="high-scores">
@@ -65,8 +61,8 @@
       </div>
     </aside>
     <main>
-      <h1>DUMB GAMES!</h1>
-      <p>Try to get as many happy faces as you can before the timer runs out...</p>
+      <h1>Happy Squares</h1>
+      <p>Find all the happy faces</p>
       <span id="instructions" ></span>
       <div id="score">Score: </div>
       <div id="canvas">
