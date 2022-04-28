@@ -131,7 +131,7 @@ const mobileStart = (timerFuncMin, timerFuncSec, difficulty, setting) => {
   canvas.addEventListener("touchend", e => {
     e.preventDefault()
     console.log("distance", movingX - startingX)
-    if(startingX+15 < movingX) {
+    if(startingX+20 < movingX) {
       mobileTarget.style.outline = 'none'
       if(square[x + 1] === undefined) {
         x = x - 9
@@ -145,7 +145,7 @@ const mobileStart = (timerFuncMin, timerFuncSec, difficulty, setting) => {
       }
       colorSquare(mobileTarget)
       console.log('right')
-    }else if(startingX-15 > movingX) {
+    }else if(startingX-20 > movingX) {
       mobileTarget.style.outline = 'none'
 
       if(square[x - 1] === undefined) {
@@ -161,7 +161,7 @@ const mobileStart = (timerFuncMin, timerFuncSec, difficulty, setting) => {
       colorSquare(mobileTarget)
       console.log('left')
     }
-    if(startingY+15 < movingY) {
+    if(startingY+20 < movingY) {
       mobileTarget.style.outline = 'none'
 
       if(square[x + 10] === undefined) {
@@ -173,7 +173,7 @@ const mobileStart = (timerFuncMin, timerFuncSec, difficulty, setting) => {
       }
       colorSquare(mobileTarget)
       console.log('down')
-    } else if(startingY-15 > movingY) {
+    } else if(startingY-20 > movingY) {
       mobileTarget.style.outline = 'none'
 
       if(square[x - 10] === undefined) {
