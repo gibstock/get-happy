@@ -97,6 +97,10 @@ const mobileStart = (timerFuncMin, timerFuncSec, difficulty, setting) => {
     let percentRnd1 = Math.floor(Math.random() * (101-20) + 20)
     let percentRnd2 = Math.floor(Math.random() * (91-20) + 20)
     div.style.outline = '1px solid red'
+    div.style.boxShadow = '5px 5px 5px 2px hsla(210, 50%, 30%, .9)'
+    div.style.position = 'relative'
+    div.style.zIndex = 1
+
     if(div.textContent === '☹' ){
       return;
     } else if(div.textContent === '🤩') {
@@ -112,6 +116,7 @@ const mobileStart = (timerFuncMin, timerFuncSec, difficulty, setting) => {
   let x = Math.floor(Math.random() * 101)
   let mobileTarget = square[x]
   mobileTarget.style.outline = '1px solid red'
+  mobileTarget.style.boxShadow = '5px 5px 5px 2px hsla(210, 50%, 30%, .9)'
 
   canvas.addEventListener("touchstart", e => {
     e.preventDefault()
@@ -133,6 +138,8 @@ const mobileStart = (timerFuncMin, timerFuncSec, difficulty, setting) => {
     console.log("distance", movingX - startingX)
     if(startingX+20 < movingX) {
       mobileTarget.style.outline = 'none'
+      mobileTarget.style.boxShadow = 'none'
+      mobileTarget.style.zIndex = '0'
       if(square[x + 1] === undefined) {
         x = x - 9
         mobileTarget = square[x]
@@ -147,6 +154,8 @@ const mobileStart = (timerFuncMin, timerFuncSec, difficulty, setting) => {
       console.log('right')
     }else if(startingX-20 > movingX) {
       mobileTarget.style.outline = 'none'
+      mobileTarget.style.boxShadow = 'none'
+      mobileTarget.style.zIndex = '0'
 
       if(square[x - 1] === undefined) {
         x = x + 9
@@ -163,6 +172,8 @@ const mobileStart = (timerFuncMin, timerFuncSec, difficulty, setting) => {
     }
     if(startingY+20 < movingY) {
       mobileTarget.style.outline = 'none'
+      mobileTarget.style.boxShadow = 'none'
+      mobileTarget.style.zIndex = '0'
 
       if(square[x + 10] === undefined) {
         x = x - 90
@@ -175,6 +186,8 @@ const mobileStart = (timerFuncMin, timerFuncSec, difficulty, setting) => {
       console.log('down')
     } else if(startingY-20 > movingY) {
       mobileTarget.style.outline = 'none'
+      mobileTarget.style.boxShadow = 'none'
+      mobileTarget.style.zIndex = '0'
 
       if(square[x - 10] === undefined) {
         x = x + 90
