@@ -130,7 +130,8 @@ const mobileStart = (timerFuncMin, timerFuncSec, difficulty, setting) => {
 
   canvas.addEventListener("touchend", e => {
     e.preventDefault()
-    if(startingX+100 < movingX) {
+    console.log("distance", movingX - startingX)
+    if(startingX+15 < movingX) {
       mobileTarget.style.outline = 'none'
       if(square[x + 1] === undefined) {
         x = x - 9
@@ -144,7 +145,7 @@ const mobileStart = (timerFuncMin, timerFuncSec, difficulty, setting) => {
       }
       colorSquare(mobileTarget)
       console.log('right')
-    }else if(startingX-100 > movingX) {
+    }else if(startingX-15 > movingX) {
       mobileTarget.style.outline = 'none'
 
       if(square[x - 1] === undefined) {
@@ -160,7 +161,7 @@ const mobileStart = (timerFuncMin, timerFuncSec, difficulty, setting) => {
       colorSquare(mobileTarget)
       console.log('left')
     }
-    if(startingY+100 < movingY) {
+    if(startingY+15 < movingY) {
       mobileTarget.style.outline = 'none'
 
       if(square[x + 10] === undefined) {
@@ -172,7 +173,7 @@ const mobileStart = (timerFuncMin, timerFuncSec, difficulty, setting) => {
       }
       colorSquare(mobileTarget)
       console.log('down')
-    } else if(startingY-100 > movingY) {
+    } else if(startingY-15 > movingY) {
       mobileTarget.style.outline = 'none'
 
       if(square[x - 10] === undefined) {
@@ -300,7 +301,6 @@ const loadLeaderBoard = (arr, len) => {
   highScores.style.height = `${canvasHeight}px`
   highScores.style.position = 'absolute'
   highScores.style.boxSizing = 'border-box'
-  // highScores.style.width = '100vw'
   highScores.style.top = '20%'
   highScores.style.left = '50%'
   highScores.style.transform = 'translateX(-50%)'
