@@ -21,10 +21,42 @@ const LEADERBOARD_URL = 'https://docs.google.com/spreadsheets/d/1EDHaR9mGXRL6GzF
 const colors = ['red', 'green', 'purple', 'white', 'black', 'blue', 'pink']
 let count = 0
 let scoresArray = []
+let colorSet = [
+  {
+    max: 50,
+    min: 0,
+  },
+  {
+    max: 100,
+    min: 51,
+  },
+  {
+    max: 150,
+    min: 101,
+  },
+  {
+    max: 200,
+    min: 151,
+  },
+  {
+    max: 250,
+    min: 201,
+  },
+  {
+    max: 300,
+    min: 251,
+  },
+  {
+    max: 360,
+    min: 301,
+  },
+]
 let currentMode;
 let currSquare;
 let prevSquare;
 
+let rndTheme = Math.floor(Math.random() * (colorSet.length))
+console.log(rndTheme)
 score.textContent = `Score: ${count}`
 
 
@@ -38,7 +70,9 @@ const mobileStart = (timerFuncMin, timerFuncSec, difficulty, setting) => {
       clearInterval(countdownTimer)
       square.forEach((el) => {
         if(el.textContent !== '🤩') {
-          el.style.visibility = 'hidden'
+          el.style.opacity = '.08'
+        }else {
+          el.style.opacity = '.1'
         }
         report.style.display = 'flex';
         if(count <= 10) {
@@ -91,9 +125,10 @@ const mobileStart = (timerFuncMin, timerFuncSec, difficulty, setting) => {
     }
   
   }, 1000)
+
   const colorSquare = (div) => {
     let rnd = Math.floor(Math.random() * difficulty)
-    let colorRnd = Math.floor(Math.random() * (220 - 150) + 150)
+    let colorRnd = Math.floor(Math.random() * (colorSet[rndTheme].max - colorSet[rndTheme].min) + colorSet[rndTheme].min)
     let percentRnd1 = Math.floor(Math.random() * (101-20) + 20)
     let percentRnd2 = Math.floor(Math.random() * (91-20) + 20)
     div.style.outline = '1px solid red'
@@ -412,9 +447,13 @@ leaderBtn.addEventListener('click', leaderboardShow)
 
 easy.addEventListener('click', () => {
   easy.textContent = 'GO!'
+  easy.style.border = '2px solid hsla(210, 50%, 90%, .8)'
+
   easy.disabled = true
   normal.disabled = true
+  normal.style.visibility = 'hidden'
   hard.disabled = true
+  hard.style.visibility = 'hidden'
   if(/Android|Pixel|iPhone|iPad|iPod/i.test(navigator.userAgent)){
     mobileInstruction.style.display = 'flex'
     mobileStart(2, 00, 4, 'Easy')
@@ -425,9 +464,13 @@ easy.addEventListener('click', () => {
 normal.addEventListener('click', () => {
   mobileInstruction.style.display = 'flex'
   normal.textContent = 'GO!'
+  normal.style.border = '2px solid hsla(210, 50%, 90%, .8)'
+
   normal.disabled = true
   hard.disabled = true
+  hard.style.visibility = 'hidden'
   easy.disabled = true
+  easy.style.visibility = 'hidden'
   if(/Android|Pixel|iPhone|iPad|iPod/i.test(navigator.userAgent)){
     mobileInstruction.style.display = 'flex'
     mobileStart(1, 00, 7, 'Normal')
@@ -437,9 +480,12 @@ normal.addEventListener('click', () => {
 })
 hard.addEventListener('click', () => {
   hard.textContent = 'GO!'
+  hard.style.border = '2px solid hsla(210, 50%, 90%, .8)'
   hard.disabled = true
   normal.disabled = true
+  normal.style.visibility = 'hidden'
   easy.disabled = true
+  easy.style.visibility = 'hidden'
   if(/Android|Pixel|iPhone|iPad|iPod/i.test(navigator.userAgent)){
     mobileInstruction.style.display = 'flex'
     mobileStart(0, 30, 13, 'Hard')

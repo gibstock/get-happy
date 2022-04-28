@@ -53,6 +53,7 @@ aside p {
 button {
   border: none;
   border-radius: 2px;
+  box-sizing: border-box;
   padding: 1em;
   background-color: hsla(200, 0%, 5%, .7);
   margin: 0 .5em;
