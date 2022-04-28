@@ -112,7 +112,7 @@ const mobileStart = (timerFuncMin, timerFuncSec, difficulty, setting) => {
   let mobileTarget = square[x]
   mobileTarget.style.outline = '1px solid red'
 
-  document.addEventListener("touchstart", e => {
+  canvas.addEventListener("touchstart", e => {
     e.preventDefault()
     startingX = e.touches[0].clientX
     startingY = e.touches[0].clientY
@@ -121,13 +121,13 @@ const mobileStart = (timerFuncMin, timerFuncSec, difficulty, setting) => {
     console.log("start")
   }, {capture: false, passive: false})
 
-  document.addEventListener("touchmove", e => {
+  canvas.addEventListener("touchmove", e => {
     e.preventDefault()
     movingX = e.touches[0].clientX
     movingY = e.touches[0].clientY
   }, {capture: false, passive: false})
 
-  document.addEventListener("touchend", e => {
+  canvas.addEventListener("touchend", e => {
     e.preventDefault()
     if(startingX+100 < movingX) {
       mobileTarget.style.outline = 'none'
