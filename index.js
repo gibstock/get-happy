@@ -77,30 +77,37 @@ const mobileStart = (timerFuncMin, timerFuncSec, difficulty, setting) => {
         report.style.display = 'flex';
         if(count <= 10) {
           displayBox.textContent = `Ok, you got ${count} happies on ${setting} mode. Maybe try again.`
+          play.style.zIndex = 99
           displayBox.append(play)
-
+          
         } else if (count <= 20) {
           displayBox.textContent = `You got ${count} happies on ${setting} mode. Not Bad.`
+          play.style.zIndex = 99
           displayBox.append(play)
-
+          
         }else if(count <= 50) {
           displayBox.textContent = `You got ${count} happies on ${setting} mode! So close to a good score! Try again.`
+          play.style.zIndex = 99
           displayBox.append(play)
           
         } else if(count <= 70) {
           displayBox.textContent = `Holy COW! You got ${count} happies on ${setting} mode! Now that's happy! You're a HAPPY BEAST!`
+          play.style.zIndex = 99
           displayBox.append(play)
           
         } else if(count <= 90) {
           displayBox.textContent = `You gaming legend! You got ${count} happies on ${setting} mode! You better go tell somebody! You're a HAPPY CAMPER!`
+          play.style.zIndex = 99
           displayBox.append(play)
           
         } else if(count === 100) {
           displayBox.textContent = `You are a GOD. You got ${count} happies on ${setting} mode and you might be the only person to get it. Get on the leaderboard. Email me andre@knucklecuts.com`
+          play.style.zIndex = 99
           displayBox.append(play)
           
         } else {
           displayBox.textContent = `Mind Blown. You got ${count} happies on ${setting} mode. You're elite.`
+          play.style.zIndex = 99
           displayBox.append(play)
 
         }
@@ -255,30 +262,38 @@ const start = (timerFuncMin, timerFuncSec, difficulty, setting) => {
         report.style.display = 'flex';
         if(count <= 10) {
           displayBox.textContent = `Ok, you got ${count} happies on ${setting} mode. Maybe try again.`
+          play.style.zIndex = 99
+          
           displayBox.append(play)
-
+          
         } else if (count <= 20) {
           displayBox.textContent = `You got ${count} happies on ${setting} mode. Not Bad.`
+          play.style.zIndex = 99
           displayBox.append(play)
-
+          
         }else if(count <= 50) {
           displayBox.textContent = `You got ${count} happies on ${setting} mode! So close to a good score! Try again.`
+          play.style.zIndex = 99
           displayBox.append(play)
           
         } else if(count <= 70) {
           displayBox.textContent = `Holy COW! You got ${count} happies on ${setting} mode! Now that's happy! You're a HAPPY BEAST!`
+          play.style.zIndex = 99
           displayBox.append(play)
           
         } else if(count <= 90) {
           displayBox.textContent = `You gaming legend! You got ${count} happies on ${setting} mode! You better go tell somebody! You're a HAPPY CAMPER!`
+          play.style.zIndex = 99
           displayBox.append(play)
           
         } else if(count === 100) {
           displayBox.textContent = `You are a GOD. You got ${count} happies on ${setting} mode and you might be the only person to get it. Get on the leaderboard. Email me andre@knucklecuts.com`
+          play.style.zIndex = 99
           displayBox.append(play)
           
         } else {
           displayBox.textContent = `Mind Blown. You got ${count} happies on ${setting} mode. You're elite.`
+          play.style.zIndex = 99
           displayBox.append(play)
 
         }
