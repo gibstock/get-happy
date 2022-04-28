@@ -15,7 +15,6 @@ const leaderboardHeader = document.getElementById('leaderboardHeader')
 const form = document.getElementById('leaderForm')
 const modeInput = document.getElementById('modeInput')
 const scoreInput = document.getElementById('scoreInput')
-const mobileControls = document.getElementById('mobileControls')
 const instructions = document.getElementById('instructions')
 const LEADERBOARD_URL = 'https://docs.google.com/spreadsheets/d/1EDHaR9mGXRL6GzFoPadh9dlbT0dqbawoGN5RRrpljBY/gviz/tq?tqx=out:json'
 const colors = ['red', 'green', 'purple', 'white', 'black', 'blue', 'pink']
@@ -31,15 +30,11 @@ score.textContent = `Score: ${count}`
 
 
 const mobileStart = (timerFuncMin, timerFuncSec, difficulty, setting) => {
-  const up = document.getElementById('up')
-  const right = document.getElementById('right')
-  const down = document.getElementById('down')
-  const left = document.getElementById('left')
+  let startingX, startingY, movingX, movingY;
   currentMode = setting
   let countdownTimer = setInterval(() => {
     if(timerFuncMin === 0 && timerFuncSec === 0) {
       clearInterval(countdownTimer)
-      mobileControls.style.visibility = 'hidden'
       square.forEach((el) => {
         if(el.textContent !== '🤩') {
           el.style.visibility = 'hidden'
@@ -95,89 +90,101 @@ const mobileStart = (timerFuncMin, timerFuncSec, difficulty, setting) => {
     }
   
   }, 1000)
-
-  
-    const colorSquare = (div) => {
-      let rnd = Math.floor(Math.random() * difficulty)
-      let colorRnd = Math.floor(Math.random() * (220 - 150) + 150)
-      let percentRnd1 = Math.floor(Math.random() * (101-20) + 20)
-      let percentRnd2 = Math.floor(Math.random() * (91-20) + 20)
-      div.style.outline = '1px solid red'
-      if(div.textContent === '☹' ){
-        return;
-      } else if(div.textContent === '🤩') {
-        div.textContent = '☹'
-        count -= 1
-        score.textContent = `Score: ${count}`
-      }else if((rnd === 6 || rnd === 2) && div.textContent !== '🤩') {
-        div.textContent = '🤩'
-        count += 1
-        score.textContent = `Score: ${count}`
-      } else div.style.backgroundColor = `hsl(${colorRnd}, ${percentRnd1}%, ${percentRnd2}%)`
-    }
-  
-
+  const colorSquare = (div) => {
+    let rnd = Math.floor(Math.random() * difficulty)
+    let colorRnd = Math.floor(Math.random() * (220 - 150) + 150)
+    let percentRnd1 = Math.floor(Math.random() * (101-20) + 20)
+    let percentRnd2 = Math.floor(Math.random() * (91-20) + 20)
+    div.style.outline = '1px solid red'
+    if(div.textContent === '☹' ){
+      return;
+    } else if(div.textContent === '🤩') {
+      div.textContent = '☹'
+      count -= 1
+      score.textContent = `Score: ${count}`
+    }else if((rnd === 6 || rnd === 2) && div.textContent !== '🤩') {
+      div.textContent = '🤩'
+      count += 1
+      score.textContent = `Score: ${count}`
+    } else div.style.backgroundColor = `hsl(${colorRnd}, ${percentRnd1}%, ${percentRnd2}%)`
+  }
   let x = Math.floor(Math.random() * 101)
   let mobileTarget = square[x]
   mobileTarget.style.outline = '1px solid red'
 
-  right.addEventListener('click', () => {
-    mobileTarget.style.outline = 'none'
-    if(square[x + 1] === undefined) {
-      x = x - 9
-      mobileTarget = square[x]
-    }if ((x - 9) % 10 === 0) {
-      x = x - 9
-      mobileTarget = square[x]
-    } else {
-      x = x + 1
-      mobileTarget = square[x]
+  document.addEventListener("touchstart", e => {
+    e.preventDefault()
+    startingX = e.touches[0].clientX
+    startingY = e.touches[0].clientY
+    touched = e.touches[0].target
+    console.log(touched)
+    console.log("start")
+  }, {capture: false, passive: false})
+
+  document.addEventListener("touchmove", e => {
+    e.preventDefault()
+    movingX = e.touches[0].clientX
+    movingY = e.touches[0].clientY
+  }, {capture: false, passive: false})
+
+  document.addEventListener("touchend", e => {
+    e.preventDefault()
+    if(startingX+100 < movingX) {
+      mobileTarget.style.outline = 'none'
+      if(square[x + 1] === undefined) {
+        x = x - 9
+        mobileTarget = square[x]
+      }if ((x - 9) % 10 === 0) {
+        x = x - 9
+        mobileTarget = square[x]
+      } else {
+        x = x + 1
+        mobileTarget = square[x]
+      }
+      colorSquare(mobileTarget)
+      console.log('right')
+    }else if(startingX-100 > movingX) {
+      mobileTarget.style.outline = 'none'
+
+      if(square[x - 1] === undefined) {
+        x = x + 9
+        mobileTarget = square[x]
+      }if (x % 10 === 0) {
+        x = x + 9
+        mobileTarget = square[x]
+      } else {
+        x = x - 1
+        mobileTarget = square[x]
+      }
+      colorSquare(mobileTarget)
+      console.log('left')
     }
-    colorSquare(mobileTarget)
-  })
+    if(startingY+100 < movingY) {
+      mobileTarget.style.outline = 'none'
 
-  left.addEventListener('click', () => {
-    mobileTarget.style.outline = 'none'
+      if(square[x + 10] === undefined) {
+        x = x - 90
+        mobileTarget = square[x]
+      }else {
+        x = x + 10
+        mobileTarget = square[x]
+      }
+      colorSquare(mobileTarget)
+      console.log('down')
+    } else if(startingY-100 > movingY) {
+      mobileTarget.style.outline = 'none'
 
-    if(square[x - 1] === undefined) {
-      x = x + 9
-      mobileTarget = square[x]
-    }if (x % 10 === 0) {
-      x = x + 9
-      mobileTarget = square[x]
-    } else {
-      x = x - 1
-      mobileTarget = square[x]
+      if(square[x - 10] === undefined) {
+        x = x + 90
+        mobileTarget = square[x]
+      }else {
+        x = x - 10
+        mobileTarget = square[x]
+      }
+      colorSquare(mobileTarget)
+      console.log('up')
     }
-    colorSquare(mobileTarget)
-  })
-
-  up.addEventListener('click', () => {
-    mobileTarget.style.outline = 'none'
-
-    if(square[x - 10] === undefined) {
-      x = x + 90
-      mobileTarget = square[x]
-    }else {
-      x = x - 10
-      mobileTarget = square[x]
-    }
-    colorSquare(mobileTarget)
-  })
-
-  down.addEventListener('click', () => {
-    mobileTarget.style.outline = 'none'
-
-    if(square[x + 10] === undefined) {
-      x = x - 90
-      mobileTarget = square[x]
-    }else {
-      x = x + 10
-      mobileTarget = square[x]
-    }
-    colorSquare(mobileTarget)
-  })
-  
+  }, {capture: false, passive: false})
   square.forEach((el) => {
     el.addEventListener('click', () => {
       alert("Hey don't cheat! No clicking!")
