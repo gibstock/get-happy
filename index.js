@@ -9,6 +9,7 @@ const play = document.getElementById('play')
 const easy = document.getElementById('easy')
 const normal = document.getElementById('normal')
 const hard = document.getElementById('hard')
+const mobileInstruction = document.getElementById('mobileInstructions')
 const leaderBtn = document.getElementById('leaderboard')
 const highScores = document.getElementById('high-scores')
 const leaderboardHeader = document.getElementById('leaderboardHeader')
@@ -354,6 +355,7 @@ const createObj = (obj, objLen) => {
 }
 
 const buildBoard = async () => {
+  console.log(navigator.userAgent)
   const fetchedGoogleSheetData = fetch(LEADERBOARD_URL)
     .then(response => response.text())
     .then(data => {
@@ -401,17 +403,20 @@ easy.addEventListener('click', () => {
   normal.disabled = true
   hard.disabled = true
   if(/Android|Pixel|iPhone|iPad|iPod/i.test(navigator.userAgent)){
+    mobileInstruction.style.display = 'flex'
     mobileStart(2, 00, 4, 'Easy')
   } else {
     start(2, 00, 4, 'Easy')
   }
 })
 normal.addEventListener('click', () => {
+  mobileInstruction.style.display = 'flex'
   normal.textContent = 'GO!'
   normal.disabled = true
   hard.disabled = true
   easy.disabled = true
   if(/Android|Pixel|iPhone|iPad|iPod/i.test(navigator.userAgent)){
+    mobileInstruction.style.display = 'flex'
     mobileStart(1, 00, 7, 'Normal')
   } else {
     start(1, 00, 7, 'Normal')
@@ -423,6 +428,7 @@ hard.addEventListener('click', () => {
   normal.disabled = true
   easy.disabled = true
   if(/Android|Pixel|iPhone|iPad|iPod/i.test(navigator.userAgent)){
+    mobileInstruction.style.display = 'flex'
     mobileStart(0, 30, 13, 'Hard')
   } else {
     start(0, 30, 13, 'Hard')
