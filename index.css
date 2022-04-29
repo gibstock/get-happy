@@ -104,6 +104,7 @@ main > p {
   font-size: 1.5em;
 }
 #countdown {
+  position: relative;
   margin-bottom: 0;
 }
 
@@ -143,6 +144,17 @@ main > p {
   height: 50vh;
 }
 
+#extraTime {
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  visibility: hidden;
+}
+.float {
+  transform: translate(50px, -400px) scale(2);
+  opacity: 0;
+  transition: all 2s;
+}
 
 @media screen and (min-width: 600px) {
   body {

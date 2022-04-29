@@ -17,9 +17,12 @@ const form = document.getElementById('leaderForm')
 const modeInput = document.getElementById('modeInput')
 const scoreInput = document.getElementById('scoreInput')
 const instructions = document.getElementById('instructions')
+const extraTime = document.getElementById('extraTime')
 const LEADERBOARD_URL = 'https://docs.google.com/spreadsheets/d/1EDHaR9mGXRL6GzFoPadh9dlbT0dqbawoGN5RRrpljBY/gviz/tq?tqx=out:json'
 const colors = ['red', 'green', 'purple', 'white', 'black', 'blue', 'pink']
 let count = 0
+let bonus = [false, false, false]
+
 let scoresArray = []
 let colorSet = [
   {
@@ -95,6 +98,8 @@ const mobileStart = (timerFuncMin, timerFuncSec, difficulty, setting) => {
           el.style.opacity = '.1'
         }
         report.style.display = 'flex';
+        canvas.style.transform = 'scale(8)'
+        canvas.style.transition = 'all 15s'
         if(count <= 10) {
           displayBox.textContent = `Ok, you got ${count} happies on ${setting} mode. Maybe try again.`
           play.style.zIndex = 99
@@ -149,6 +154,36 @@ const mobileStart = (timerFuncMin, timerFuncSec, difficulty, setting) => {
         minimumIntegerDigits: 2,
         useGrouping: false
       })
+      if(setting === 'Hard' && count >= 10 && count <= 14 && bonus[0] !== true) {
+        timerFuncSec += 10
+        extraTime.style.visibility = 'visible'
+        extraTime.classList.add('float')
+        bonus[0] = true
+        setTimeout(()=> {
+          extraTime.style.visibility = 'hidden'
+          extraTime.classList.remove('float')
+        }, 2000)
+      }
+      if(setting === 'Hard' && count >= 20 && count <= 24 && bonus[1] !== true) {
+        timerFuncSec += 10
+        extraTime.style.visibility = 'visible'
+        extraTime.classList.add('float')
+        bonus[1] = true
+        setTimeout(()=> {
+          extraTime.style.visibility = 'hidden'
+          extraTime.classList.remove('float')
+        }, 2000)
+      }
+      if(setting === 'Hard' && count >= 30 && count <= 34 && bonus[2] !== true) {
+        timerFuncSec += 10
+        extraTime.style.visibility = 'visible'
+        extraTime.classList.add('float')
+        bonus[2] = true
+        setTimeout(()=> {
+          extraTime.style.visibility = 'hidden'
+          extraTime.classList.remove('float')
+        }, 2000)
+      }
     }
   
   }, 1000)
@@ -185,8 +220,6 @@ const mobileStart = (timerFuncMin, timerFuncSec, difficulty, setting) => {
     startingX = e.touches[0].clientX
     startingY = e.touches[0].clientY
     touched = e.touches[0].target
-    console.log(touched)
-    console.log("start")
   }, {capture: false, passive: false})
 
   canvas.addEventListener("touchmove", e => {
@@ -196,8 +229,8 @@ const mobileStart = (timerFuncMin, timerFuncSec, difficulty, setting) => {
   }, {capture: false, passive: false})
 
   canvas.addEventListener("touchend", e => {
+    // RIGHT
     e.preventDefault()
-    console.log("distance", movingX - startingX)
     if(startingX+20 < movingX) {
       mobileTarget.style.outline = 'none'
       mobileTarget.style.boxShadow = 'none'
@@ -213,8 +246,8 @@ const mobileStart = (timerFuncMin, timerFuncSec, difficulty, setting) => {
         mobileTarget = square[x]
       }
       colorSquare(mobileTarget)
-      console.log('right')
     }else if(startingX-20 > movingX) {
+      //LEFT
       mobileTarget.style.outline = 'none'
       mobileTarget.style.boxShadow = 'none'
       mobileTarget.style.zIndex = '0'
@@ -230,9 +263,9 @@ const mobileStart = (timerFuncMin, timerFuncSec, difficulty, setting) => {
         mobileTarget = square[x]
       }
       colorSquare(mobileTarget)
-      console.log('left')
     }
     if(startingY+20 < movingY) {
+      // DOWN
       mobileTarget.style.outline = 'none'
       mobileTarget.style.boxShadow = 'none'
       mobileTarget.style.zIndex = '0'
@@ -245,8 +278,8 @@ const mobileStart = (timerFuncMin, timerFuncSec, difficulty, setting) => {
         mobileTarget = square[x]
       }
       colorSquare(mobileTarget)
-      console.log('down')
     } else if(startingY-20 > movingY) {
+      // UP
       mobileTarget.style.outline = 'none'
       mobileTarget.style.boxShadow = 'none'
       mobileTarget.style.zIndex = '0'
@@ -259,7 +292,6 @@ const mobileStart = (timerFuncMin, timerFuncSec, difficulty, setting) => {
         mobileTarget = square[x]
       }
       colorSquare(mobileTarget)
-      console.log('up')
     }
   }, {capture: false, passive: false})
   square.forEach((el) => {
@@ -277,9 +309,13 @@ const start = (timerFuncMin, timerFuncSec, difficulty, setting) => {
       clearInterval(countdownTimer)
       square.forEach((el) => {
         if(el.textContent !== '🤩') {
-          el.style.visibility = 'hidden'
+          el.style.opacity = '.08'
+        }else {
+          el.style.opacity = '.1'
         }
         report.style.display = 'flex';
+        canvas.style.transform = 'scale(8)'
+        canvas.style.transition = 'all 15s'
         if(count <= 10) {
           displayBox.textContent = `Ok, you got ${count} happies on ${setting} mode. Maybe try again.`
           play.style.zIndex = 99
@@ -335,6 +371,36 @@ const start = (timerFuncMin, timerFuncSec, difficulty, setting) => {
         minimumIntegerDigits: 2,
         useGrouping: false
       })
+      if(setting === 'Hard' && count >= 10 && count <= 14 && bonus[0] !== true) {
+        timerFuncSec += 10
+        extraTime.style.visibility = 'visible'
+        extraTime.classList.add('float')
+        bonus[0] = true
+        setTimeout(()=> {
+          extraTime.style.visibility = 'hidden'
+          extraTime.classList.remove('float')
+        }, 2000)
+      }
+      if(setting === 'Hard' && count >= 20 && count <= 24 && bonus[1] !== true) {
+        timerFuncSec += 10
+        extraTime.style.visibility = 'visible'
+        extraTime.classList.add('float')
+        bonus[1] = true
+        setTimeout(()=> {
+          extraTime.style.visibility = 'hidden'
+          extraTime.classList.remove('float')
+        }, 2000)
+      }
+      if(setting === 'Hard' && count >= 30 && count <= 34 && bonus[3] !== true) {
+        timerFuncSec += 10
+        extraTime.style.visibility = 'visible'
+        extraTime.classList.add('float')
+        bonus[3] = true
+        setTimeout(()=> {
+          extraTime.style.visibility = 'hidden'
+          extraTime.classList.remove('float')
+        }, 2000)
+      }
     }
   
   }, 1000)
@@ -438,7 +504,6 @@ const createObj = (obj, objLen) => {
 }
 
 const buildBoard = async () => {
-  console.log(navigator.userAgent)
   const fetchedGoogleSheetData = fetch(LEADERBOARD_URL)
     .then(response => response.text())
     .then(data => {
