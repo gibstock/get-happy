@@ -23,32 +23,52 @@ let count = 0
 let scoresArray = []
 let colorSet = [
   {
-    max: 50,
+    max: 30,
     min: 0,
   },
   {
-    max: 100,
-    min: 51,
+    max: 60,
+    min: 31,
+  },
+  {
+    max: 90,
+    min: 61,
+  },
+  {
+    max: 120,
+    min: 91,
   },
   {
     max: 150,
-    min: 101,
+    min: 121,
   },
   {
-    max: 200,
+    max: 180,
     min: 151,
   },
   {
-    max: 250,
-    min: 201,
+    max: 210,
+    min: 181,
+  },
+  {
+    max: 240,
+    min: 211,
+  },
+  {
+    max: 270,
+    min: 241,
   },
   {
     max: 300,
-    min: 251,
+    min: 271,
+  },
+  {
+    max: 330,
+    min: 301,
   },
   {
     max: 360,
-    min: 301,
+    min: 331,
   },
 ]
 let currentMode;
