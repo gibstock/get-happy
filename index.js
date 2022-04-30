@@ -22,6 +22,7 @@ const extraTime = document.getElementById('extraTime')
 const counter = document.getElementById('counter')
 const moviesDiv = document.getElementById('movies')
 const movies = moviesDiv.querySelectorAll('.movie')
+const timesep = document.getElementById('timeSep')
 
 const LEADERBOARD_URL = 'https://docs.google.com/spreadsheets/d/1EDHaR9mGXRL6GzFoPadh9dlbT0dqbawoGN5RRrpljBY/gviz/tq?tqx=out:json'
 const colors = ['red', 'green', 'purple', 'white', 'black', 'blue', 'pink']
@@ -597,6 +598,7 @@ const loadLeaderBoard = (easyArr, normalArr, hardArr, eLen, nLen, hLen) => {
   }
   closeBtn.addEventListener('click', () => {
     highScores.style.display = 'none'
+    timesep.style.visibility = 'visible'
   })
 }
 const createObj = (obj, objLen) => {
@@ -675,9 +677,7 @@ const buildBoard = async () => {
 
 const leaderboardShow = () => {
   highScores.style.display = 'flex'
-  console.log(window.innerWidth * .25)
-console.log(typeof Number(getComputedStyle(highScores).width.substring(0,3)))
-
+  timesep.style.visibility = 'hidden'
 
 }
 
@@ -695,7 +695,6 @@ moviesDiv.addEventListener('scroll', ()=> {
         movie.classList.remove('visible')
       }
     } else {
-      console.log(movie.getBoundingClientRect().left, getComputedStyle(highScores).width)
       if(movie.getBoundingClientRect().left <= Number(getComputedStyle(highScores).width.substring(0,3)) * 0.75  && movie.getBoundingClientRect().left > 0) {
         movie.classList.add('visible')
         handleContentChange(movie.dataset.movie)
@@ -707,7 +706,6 @@ moviesDiv.addEventListener('scroll', ()=> {
 })
 
 const handleContentChange = id => {
-  console.log(id)
   if(!id) return
 
   for( const contentDiv of contentDivs) {
@@ -717,7 +715,6 @@ const handleContentChange = id => {
   document.getElementById(id).classList.add('visible')
 
 }
-
 easy.addEventListener('click', () => {
   easy.textContent = 'GO!'
   easy.style.border = '2px solid hsla(210, 50%, 90%, .8)'
