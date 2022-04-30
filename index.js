@@ -1,5 +1,6 @@
 const square = document.querySelectorAll('.grid')
 const canvas = document.getElementById('canvas')
+const mainWrapper = document.getElementById('main-wrapper')
 const score = document.getElementById('score')
 const minuteDisplay = document.getElementById('minuteDisplay')
 const secondDisplay = document.getElementById('secondDisplay')
@@ -219,20 +220,20 @@ const mobileStart = (timerFuncMin, timerFuncSec, difficulty, setting) => {
   mobileTarget.style.outline = '1px solid red'
   mobileTarget.style.boxShadow = '5px 5px 5px 2px hsla(210, 50%, 30%, .9)'
 
-  canvas.addEventListener("touchstart", e => {
+  mainWrapper.addEventListener("touchstart", e => {
     e.preventDefault()
     startingX = e.touches[0].clientX
     startingY = e.touches[0].clientY
     // touched = e.touches[0].target
   }, {capture: false, passive: false})
 
-  canvas.addEventListener("touchmove", e => {
+  mainWrapper.addEventListener("touchmove", e => {
     e.preventDefault()
     movingX = e.touches[0].clientX
     movingY = e.touches[0].clientY
   }, {capture: false, passive: false})
 
-  canvas.addEventListener("touchend", e => {
+  mainWrapper.addEventListener("touchend", e => {
     // RIGHT
     e.preventDefault()
     if(setting = 'Hard'){
