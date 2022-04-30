@@ -18,6 +18,7 @@ const modeInput = document.getElementById('modeInput')
 const scoreInput = document.getElementById('scoreInput')
 const instructions = document.getElementById('instructions')
 const extraTime = document.getElementById('extraTime')
+const counter = document.getElementById('counter')
 const LEADERBOARD_URL = 'https://docs.google.com/spreadsheets/d/1EDHaR9mGXRL6GzFoPadh9dlbT0dqbawoGN5RRrpljBY/gviz/tq?tqx=out:json'
 const colors = ['red', 'green', 'purple', 'white', 'black', 'blue', 'pink']
 let count = 0
@@ -82,12 +83,9 @@ let rndTheme = Math.floor(Math.random() * (colorSet.length))
 console.log(rndTheme)
 score.textContent = `Score: ${count}`
 
-
-
-
-const mobileStart = (timerFuncMin, timerFuncSec, difficulty, setting) => {
-  let startingX, startingY, movingX, movingY;
+const countDown = (timerFuncMin, timerFuncSec, setting) => {
   currentMode = setting
+  console.log(currentMode)
   let countdownTimer = setInterval(() => {
     if(timerFuncMin === 0 && timerFuncSec === 0) {
       clearInterval(countdownTimer)
@@ -100,42 +98,32 @@ const mobileStart = (timerFuncMin, timerFuncSec, difficulty, setting) => {
         report.style.display = 'flex';
         canvas.style.transform = 'scale(8)'
         canvas.style.transition = 'all 15s'
+        canvas.style.border = 'none'
+        counter.style.opacity = '0'
+        counter.style.transition = 'all 3s'
         if(count <= 10) {
           displayBox.textContent = `Ok, you got ${count} happies on ${setting} mode. Maybe try again.`
-          play.style.zIndex = 99
-          displayBox.append(play)
           
         } else if (count <= 20) {
           displayBox.textContent = `You got ${count} happies on ${setting} mode. Not Bad.`
-          play.style.zIndex = 99
-          displayBox.append(play)
           
         }else if(count <= 50) {
           displayBox.textContent = `You got ${count} happies on ${setting} mode! So close to a good score! Try again.`
-          play.style.zIndex = 99
-          displayBox.append(play)
           
         } else if(count <= 70) {
           displayBox.textContent = `Holy COW! You got ${count} happies on ${setting} mode! Now that's happy! You're a HAPPY BEAST!`
-          play.style.zIndex = 99
-          displayBox.append(play)
           
         } else if(count <= 90) {
           displayBox.textContent = `You gaming legend! You got ${count} happies on ${setting} mode! You better go tell somebody! You're a HAPPY CAMPER!`
-          play.style.zIndex = 99
-          displayBox.append(play)
           
         } else if(count === 100) {
           displayBox.textContent = `You are a GOD. You got ${count} happies on ${setting} mode and you might be the only person to get it. Get on the leaderboard. Email me andre@knucklecuts.com`
-          play.style.zIndex = 99
-          displayBox.append(play)
           
         } else {
           displayBox.textContent = `Mind Blown. You got ${count} happies on ${setting} mode. You're elite.`
-          play.style.zIndex = 99
-          displayBox.append(play)
-
         }
+        play.style.zIndex = 99
+        displayBox.append(play)
       })
     } else if(timerFuncMin !== 0 && timerFuncSec === 0) {
       timerFuncMin--
@@ -184,9 +172,25 @@ const mobileStart = (timerFuncMin, timerFuncSec, difficulty, setting) => {
           extraTime.classList.remove('float')
         }, 2000)
       }
+      if((setting === 'Easy' || setting === 'Normal') && count >= 50 && count <= 55 && bonus[3] !== true) {
+        timerFuncSec += 10
+        extraTime.style.visibility = 'visible'
+        extraTime.classList.add('float')
+        bonus[3] = true
+        setTimeout(()=> {
+          extraTime.style.visibility = 'hidden'
+          extraTime.classList.remove('float')
+        }, 2000)
+      }
     }
   
   }, 1000)
+}
+
+
+const mobileStart = (timerFuncMin, timerFuncSec, difficulty, setting) => {
+  let startingX, startingY, movingX, movingY;
+  countDown(timerFuncMin, timerFuncSec, setting)
 
   const colorSquare = (div) => {
     let rnd = Math.floor(Math.random() * difficulty)
@@ -219,7 +223,7 @@ const mobileStart = (timerFuncMin, timerFuncSec, difficulty, setting) => {
     e.preventDefault()
     startingX = e.touches[0].clientX
     startingY = e.touches[0].clientY
-    touched = e.touches[0].target
+    // touched = e.touches[0].target
   }, {capture: false, passive: false})
 
   canvas.addEventListener("touchmove", e => {
@@ -231,67 +235,134 @@ const mobileStart = (timerFuncMin, timerFuncSec, difficulty, setting) => {
   canvas.addEventListener("touchend", e => {
     // RIGHT
     e.preventDefault()
-    if(startingX+20 < movingX) {
-      mobileTarget.style.outline = 'none'
-      mobileTarget.style.boxShadow = 'none'
-      mobileTarget.style.zIndex = '0'
-      if(square[x + 1] === undefined) {
-        x = x - 9
-        mobileTarget = square[x]
-      }if ((x - 9) % 10 === 0) {
-        x = x - 9
-        mobileTarget = square[x]
-      } else {
-        x = x + 1
-        mobileTarget = square[x]
+    if(setting = 'Hard'){
+      if(startingX+20 < movingX) {
+        mobileTarget.style.outline = 'none'
+        mobileTarget.style.boxShadow = 'none'
+        mobileTarget.style.zIndex = '0'
+        if(square[x + 1] === undefined) {
+          x = x - 9
+          mobileTarget = square[x]
+        }if ((x - 9) % 10 === 0) {
+          x = x - 9
+          mobileTarget = square[x]
+        } else {
+          x = x + 1
+          mobileTarget = square[x]
+        }
+        colorSquare(mobileTarget)
+      }else if(startingX-20 > movingX) {
+        //LEFT
+        mobileTarget.style.outline = 'none'
+        mobileTarget.style.boxShadow = 'none'
+        mobileTarget.style.zIndex = '0'
+  
+        if(square[x - 1] === undefined) {
+          x = x + 9
+          mobileTarget = square[x]
+        }if (x % 10 === 0) {
+          x = x + 9
+          mobileTarget = square[x]
+        } else {
+          x = x - 1
+          mobileTarget = square[x]
+        }
+        colorSquare(mobileTarget)
       }
-      colorSquare(mobileTarget)
-    }else if(startingX-20 > movingX) {
-      //LEFT
-      mobileTarget.style.outline = 'none'
-      mobileTarget.style.boxShadow = 'none'
-      mobileTarget.style.zIndex = '0'
+      if(startingY+20 < movingY) {
+        // DOWN
+        mobileTarget.style.outline = 'none'
+        mobileTarget.style.boxShadow = 'none'
+        mobileTarget.style.zIndex = '0'
+  
+        if(square[x + 10] === undefined) {
+          x = x - 90
+          mobileTarget = square[x]
+        }else {
+          x = x + 10
+          mobileTarget = square[x]
+        }
+        colorSquare(mobileTarget)
+      } else if(startingY-20 > movingY) {
+        // UP
+        mobileTarget.style.outline = 'none'
+        mobileTarget.style.boxShadow = 'none'
+        mobileTarget.style.zIndex = '0'
+  
+        if(square[x - 10] === undefined) {
+          x = x + 90
+          mobileTarget = square[x]
+        }else {
+          x = x - 10
+          mobileTarget = square[x]
+        }
+        colorSquare(mobileTarget)
+      }
 
-      if(square[x - 1] === undefined) {
-        x = x + 9
-        mobileTarget = square[x]
-      }if (x % 10 === 0) {
-        x = x + 9
-        mobileTarget = square[x]
-      } else {
-        x = x - 1
-        mobileTarget = square[x]
+    } else {
+      if(startingX+50 < movingX) {
+        mobileTarget.style.outline = 'none'
+        mobileTarget.style.boxShadow = 'none'
+        mobileTarget.style.zIndex = '0'
+        if(square[x + 1] === undefined) {
+          x = x - 9
+          mobileTarget = square[x]
+        }if ((x - 9) % 10 === 0) {
+          x = x - 9
+          mobileTarget = square[x]
+        } else {
+          x = x + 1
+          mobileTarget = square[x]
+        }
+        colorSquare(mobileTarget)
+      }else if(startingX-50 > movingX) {
+        //LEFT
+        mobileTarget.style.outline = 'none'
+        mobileTarget.style.boxShadow = 'none'
+        mobileTarget.style.zIndex = '0'
+  
+        if(square[x - 1] === undefined) {
+          x = x + 9
+          mobileTarget = square[x]
+        }if (x % 10 === 0) {
+          x = x + 9
+          mobileTarget = square[x]
+        } else {
+          x = x - 1
+          mobileTarget = square[x]
+        }
+        colorSquare(mobileTarget)
       }
-      colorSquare(mobileTarget)
-    }
-    if(startingY+20 < movingY) {
-      // DOWN
-      mobileTarget.style.outline = 'none'
-      mobileTarget.style.boxShadow = 'none'
-      mobileTarget.style.zIndex = '0'
+      if(startingY+50 < movingY) {
+        // DOWN
+        mobileTarget.style.outline = 'none'
+        mobileTarget.style.boxShadow = 'none'
+        mobileTarget.style.zIndex = '0'
+  
+        if(square[x + 10] === undefined) {
+          x = x - 90
+          mobileTarget = square[x]
+        }else {
+          x = x + 10
+          mobileTarget = square[x]
+        }
+        colorSquare(mobileTarget)
+      } else if(startingY-50 > movingY) {
+        // UP
+        mobileTarget.style.outline = 'none'
+        mobileTarget.style.boxShadow = 'none'
+        mobileTarget.style.zIndex = '0'
+  
+        if(square[x - 10] === undefined) {
+          x = x + 90
+          mobileTarget = square[x]
+        }else {
+          x = x - 10
+          mobileTarget = square[x]
+        }
+        colorSquare(mobileTarget)
+      }
 
-      if(square[x + 10] === undefined) {
-        x = x - 90
-        mobileTarget = square[x]
-      }else {
-        x = x + 10
-        mobileTarget = square[x]
-      }
-      colorSquare(mobileTarget)
-    } else if(startingY-20 > movingY) {
-      // UP
-      mobileTarget.style.outline = 'none'
-      mobileTarget.style.boxShadow = 'none'
-      mobileTarget.style.zIndex = '0'
-
-      if(square[x - 10] === undefined) {
-        x = x + 90
-        mobileTarget = square[x]
-      }else {
-        x = x - 10
-        mobileTarget = square[x]
-      }
-      colorSquare(mobileTarget)
     }
   }, {capture: false, passive: false})
   square.forEach((el) => {
@@ -303,107 +374,7 @@ const mobileStart = (timerFuncMin, timerFuncSec, difficulty, setting) => {
 }
 const start = (timerFuncMin, timerFuncSec, difficulty, setting) => {
   instructions.textContent = '(Hint: drag the mouse across the square)'
-  currentMode = setting
-  let countdownTimer = setInterval(() => {
-    if(timerFuncMin === 0 && timerFuncSec === 0) {
-      clearInterval(countdownTimer)
-      square.forEach((el) => {
-        if(el.textContent !== '🤩') {
-          el.style.opacity = '.08'
-        }else {
-          el.style.opacity = '.1'
-        }
-        report.style.display = 'flex';
-        canvas.style.transform = 'scale(8)'
-        canvas.style.transition = 'all 15s'
-        if(count <= 10) {
-          displayBox.textContent = `Ok, you got ${count} happies on ${setting} mode. Maybe try again.`
-          play.style.zIndex = 99
-          
-          displayBox.append(play)
-          
-        } else if (count <= 20) {
-          displayBox.textContent = `You got ${count} happies on ${setting} mode. Not Bad.`
-          play.style.zIndex = 99
-          displayBox.append(play)
-          
-        }else if(count <= 50) {
-          displayBox.textContent = `You got ${count} happies on ${setting} mode! So close to a good score! Try again.`
-          play.style.zIndex = 99
-          displayBox.append(play)
-          
-        } else if(count <= 70) {
-          displayBox.textContent = `Holy COW! You got ${count} happies on ${setting} mode! Now that's happy! You're a HAPPY BEAST!`
-          play.style.zIndex = 99
-          displayBox.append(play)
-          
-        } else if(count <= 90) {
-          displayBox.textContent = `You gaming legend! You got ${count} happies on ${setting} mode! You better go tell somebody! You're a HAPPY CAMPER!`
-          play.style.zIndex = 99
-          displayBox.append(play)
-          
-        } else if(count === 100) {
-          displayBox.textContent = `You are a GOD. You got ${count} happies on ${setting} mode and you might be the only person to get it. Get on the leaderboard. Email me andre@knucklecuts.com`
-          play.style.zIndex = 99
-          displayBox.append(play)
-          
-        } else {
-          displayBox.textContent = `Mind Blown. You got ${count} happies on ${setting} mode. You're elite.`
-          play.style.zIndex = 99
-          displayBox.append(play)
-
-        }
-      })
-    } else if(timerFuncMin !== 0 && timerFuncSec === 0) {
-      timerFuncMin--
-      timerFuncSec = 59
-      minuteDisplay.innerText = timerFuncMin.toLocaleString('en-US', {
-        minimumIntegerDigits: 2,
-        useGrouping: false
-      })
-      secondDisplay.innerText = timerFuncSec.toLocaleString('en-US', {
-        minimumIntegerDigits: 2,
-        useGrouping: false
-      })
-    } else if(timerFuncMin >= 0 && timerFuncSec >= 0) {
-      timerFuncSec--
-      secondDisplay.innerText = timerFuncSec.toLocaleString('en-US', {
-        minimumIntegerDigits: 2,
-        useGrouping: false
-      })
-      if(setting === 'Hard' && count >= 10 && count <= 14 && bonus[0] !== true) {
-        timerFuncSec += 10
-        extraTime.style.visibility = 'visible'
-        extraTime.classList.add('float')
-        bonus[0] = true
-        setTimeout(()=> {
-          extraTime.style.visibility = 'hidden'
-          extraTime.classList.remove('float')
-        }, 2000)
-      }
-      if(setting === 'Hard' && count >= 20 && count <= 24 && bonus[1] !== true) {
-        timerFuncSec += 10
-        extraTime.style.visibility = 'visible'
-        extraTime.classList.add('float')
-        bonus[1] = true
-        setTimeout(()=> {
-          extraTime.style.visibility = 'hidden'
-          extraTime.classList.remove('float')
-        }, 2000)
-      }
-      if(setting === 'Hard' && count >= 30 && count <= 34 && bonus[3] !== true) {
-        timerFuncSec += 10
-        extraTime.style.visibility = 'visible'
-        extraTime.classList.add('float')
-        bonus[3] = true
-        setTimeout(()=> {
-          extraTime.style.visibility = 'hidden'
-          extraTime.classList.remove('float')
-        }, 2000)
-      }
-    }
-  
-  }, 1000)
+  countDown(timerFuncMin, timerFuncSec, setting)
 
   square.forEach((el) => {
     el.addEventListener('mouseover', () => {
@@ -556,9 +527,9 @@ easy.addEventListener('click', () => {
   hard.style.visibility = 'hidden'
   if(/Android|Pixel|iPhone|iPad|iPod/i.test(navigator.userAgent)){
     mobileInstruction.style.display = 'flex'
-    mobileStart(2, 00, 4, 'Easy')
+    mobileStart(2, 0o0, 4, 'Easy')
   } else {
-    start(2, 00, 4, 'Easy')
+    start(2, 0o0, 4, 'Easy')
   }
 })
 normal.addEventListener('click', () => {
@@ -573,9 +544,9 @@ normal.addEventListener('click', () => {
   easy.style.visibility = 'hidden'
   if(/Android|Pixel|iPhone|iPad|iPod/i.test(navigator.userAgent)){
     mobileInstruction.style.display = 'flex'
-    mobileStart(1, 00, 7, 'Normal')
+    mobileStart(1, 0o0, 7, 'Normal')
   } else {
-    start(1, 00, 7, 'Normal')
+    start(1, 0o0, 7, 'Normal')
   }
 })
 hard.addEventListener('click', () => {
@@ -597,4 +568,6 @@ hard.addEventListener('click', () => {
 play.addEventListener('click', () => {
   window.location.href=window.location.href
 })
-window.addEventListener("DOMContentLoaded",buildBoard)
+window.addEventListener("DOMContentLoaded", ()=>{
+  buildBoard()
+})

@@ -100,10 +100,11 @@ main > p {
   margin: auto;
   border: 2px solid black;
 }
-#score, #countdown {
+
+#score, #counter {
   font-size: 1.5em;
 }
-#countdown {
+#counter {
   position: relative;
   margin-bottom: 0;
 }
@@ -113,10 +114,7 @@ main > p {
   flex-flow: column;
   justify-content: center;
   align-items: center;
-  /* width: 10px;
-  height: 10px; */
-  /* outline: 1px solid red; */
-  /* background-color: darkcyan; */
+  
 }
 #report {
   display: none;
@@ -155,6 +153,8 @@ main > p {
   opacity: 0;
   transition: all 2s;
 }
+
+
 
 @media screen and (min-width: 600px) {
   body {
