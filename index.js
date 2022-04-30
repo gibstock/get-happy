@@ -438,47 +438,14 @@ const loadLeaderBoard = (easyArr, normalArr, hardArr, eLen, nLen, hLen) => {
   closeBtn.style.right = '1em'
   closeBtn.style.cursor = 'pointer'
   highScores.style.backgroundColor = 'hsl(125, 25%, 0%)'
-  // highScores.style.height = `${canvasHeight}px`
   highScores.style.height = `100vh`
   highScores.style.position = 'absolute'
   highScores.style.boxSizing = 'border-box'
   highScores.style.top = '0'
   highScores.style.left = '0'
-  // highScores.style.transform = 'translateX(-50%)'
   highScores.style.flexFlow = 'column'
   highScores.style.color = 'white'
-  // highScores.children[1].style.listStyle = 'none'
-  // highScores.children[1].style.padding = 0
-  // leaderboardHeader.textContent = 'Leaderboard'
   highScores.append(closeBtn)
-  // for(let i = 0; i < len; i++) {
-  //   let li = document.createElement('li')
-  //   if(i === 0) {
-  //     li.innerHTML = `#${i+1} <span class="usrName">${arr[i].username}</span> scored ${arr[i].score} on ${arr[i].mode} mode 👑`
-  //   } else {
-  //     li.innerHTML = `#${i +1} <span class="usrName">${arr[i].username}</span> scored ${arr[i].score} on ${arr[i].mode} mode`
-  //   }
-  //   const usrNameClass = document.querySelectorAll('.usrName')
-  //   usrNameClass.forEach((span) => {
-  //     span.style.color = `hsl(${colorRnd}, ${percentRnd1}%, ${percentRnd2}%)`
-  //     if(colorRnd + 5 <= 360) {
-  //       colorRnd += 10
-  //     } else {
-  //       colorRnd = 0
-  //     }
-  //     if(percentRnd1 + 5 <= 100) {
-  //       percentRnd1 += 5
-  //     } else {
-  //       percentRnd1 = 50
-  //     }
-  //     if(percentRnd2 + 5 <= 90){
-  //       percentRnd2 += 5
-  //     } else {
-  //       percentRnd2 = 50
-  //     }
-  //   })
-  //   highScores.children[1].append(li)
-  // }
   // EASY
   for(let i = 0; i < eLen; i++) {
     let tr = document.createElement('tr')
@@ -642,15 +609,7 @@ const buildBoard = async () => {
       let colStart = data.indexOf("cols") -2
       const result = (JSON.parse(data.slice(colStart, data.length - 3))).rows
       let resultLength = Object.keys(result).length // set length for dynamic variable rendering
-      // const resultArray = Object.entries(result)
-      // console.log(resultArray)
-      // const easyFiltered = resultArray.filter(([key, value]) => value === 'Easy' )
-
-      // const easyResult = Object.fromEntries(easyFiltered)
-      // console.log(easyResult)
       createObj(result, resultLength)
-
-
     })
 
     form.addEventListener('submit', (e) => {
@@ -674,11 +633,9 @@ const buildBoard = async () => {
     })
 }
 
-
 const leaderboardShow = () => {
   highScores.style.display = 'flex'
   timesep.style.visibility = 'hidden'
-
 }
 
 leaderBtn.addEventListener('click', leaderboardShow)
