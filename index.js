@@ -246,7 +246,7 @@ const mobileStart = (timerFuncMin, timerFuncSec, difficulty, setting) => {
   mainWrapper.addEventListener("touchend", e => {
     // RIGHT
     e.preventDefault()
-    if(setting = 'Hard'){
+    if(setting === 'Hard'){
       if(startingX+20 < movingX) {
         mobileTarget.style.outline = 'none'
         mobileTarget.style.boxShadow = 'none'
@@ -311,7 +311,7 @@ const mobileStart = (timerFuncMin, timerFuncSec, difficulty, setting) => {
       }
 
     } else {
-      if(startingX+50 < movingX) {
+      if(startingX+75 < movingX) {
         mobileTarget.style.outline = 'none'
         mobileTarget.style.boxShadow = 'none'
         mobileTarget.style.zIndex = '0'
@@ -326,7 +326,7 @@ const mobileStart = (timerFuncMin, timerFuncSec, difficulty, setting) => {
           mobileTarget = square[x]
         }
         colorSquare(mobileTarget)
-      }else if(startingX-50 > movingX) {
+      }else if(startingX-75 > movingX) {
         //LEFT
         mobileTarget.style.outline = 'none'
         mobileTarget.style.boxShadow = 'none'
@@ -344,7 +344,7 @@ const mobileStart = (timerFuncMin, timerFuncSec, difficulty, setting) => {
         }
         colorSquare(mobileTarget)
       }
-      if(startingY+50 < movingY) {
+      if(startingY+75 < movingY) {
         // DOWN
         mobileTarget.style.outline = 'none'
         mobileTarget.style.boxShadow = 'none'
@@ -358,7 +358,7 @@ const mobileStart = (timerFuncMin, timerFuncSec, difficulty, setting) => {
           mobileTarget = square[x]
         }
         colorSquare(mobileTarget)
-      } else if(startingY-50 > movingY) {
+      } else if(startingY-75 > movingY) {
         // UP
         mobileTarget.style.outline = 'none'
         mobileTarget.style.boxShadow = 'none'
