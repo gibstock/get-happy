@@ -14,6 +14,7 @@ body {
 #main-wrapper {
   display: flex;
   flex-flow: column-reverse;
+  height: 100vh;
 }
 h1 {
   margin-bottom: 0;
@@ -75,8 +76,13 @@ button:hover {
   /* padding: 1em; */
   display: none;
   width: 100%;
+  row-gap: 1em;
   /* overflow: scroll; */
   /* scroll-behavior: smooth; */
+}
+#leaderForm {
+  position: relative;
+  z-index: 99;
 }
 #leaderForm h3 {
   color: white;
@@ -96,9 +102,9 @@ main > p {
   display: grid;
   grid-template-columns: repeat(10, 1fr);
   width: 100%;
-  height: 40vh;
+  height: 50vh;
   margin: auto;
-  border: 2px solid black;
+  border: 1px solid black;
 }
 
 #score, #counter {
@@ -156,9 +162,9 @@ main > p {
 
 /* TABLE CSS  */
 .upper {
-  height: 20vh;
+  /* height: 20vh; */
   overflow: hidden;
-  margin-bottom: 5vh;
+  /* margin-bottom: 5vh; */
 }
 .movies {
   display: flex;
@@ -179,9 +185,9 @@ main > p {
   scroll-snap-align: start;
   margin: 0 15px;
 }
-.lower {
+/* .lower {
   height: 70vh;
-}
+} */
 .header {
   padding: 1em;
   text-align: center;
@@ -189,6 +195,10 @@ main > p {
 }
 
 .smiley {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
   width: 100%;
   height: 100%;
   object-fit: cover;
@@ -199,6 +209,7 @@ main > p {
 .smiley h2 {
   text-align: center;
   color: white;
+  margin: 1em 0 0 0;
 }
 .contentContainer {
   position: relative;
@@ -226,6 +237,7 @@ main > p {
 }
 table {
   width: 100%;
+  /* table-layout: fixed; */
 }
 th {
   text-align: left;

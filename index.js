@@ -33,6 +33,7 @@ let normalLen = 0
 let hardLen = 0
 let isMobile = false
 let isDesktop = false
+let gameOver = false
 
 let easyScoresArray = []
 let normalScoresArray = []
@@ -100,6 +101,7 @@ const countDown = (timerFuncMin, timerFuncSec, setting) => {
   let countdownTimer = setInterval(() => {
     if(timerFuncMin === 0 && timerFuncSec === 0) {
       clearInterval(countdownTimer)
+      gameOver = true
       square.forEach((el) => {
         if(el.textContent !== '🤩') {
           el.style.opacity = '.08'
@@ -377,10 +379,15 @@ const mobileStart = (timerFuncMin, timerFuncSec, difficulty, setting) => {
     }
   }, {capture: false, passive: false})
   square.forEach((el) => {
-    el.addEventListener('click', () => {
-      alert("Hey don't cheat! No clicking!")
-      window.location.href=window.location.href
-    })
+    if(gameOver) {
+      console.log('Game Over')
+      return
+    }else {
+      el.addEventListener('click', () => {
+        alert("Hey don't cheat! No clicking!")
+        window.location.href=window.location.href
+      })
+    }
   })
 }
 const start = (timerFuncMin, timerFuncSec, difficulty, setting) => {
@@ -406,12 +413,17 @@ const start = (timerFuncMin, timerFuncSec, difficulty, setting) => {
       } else el.style.backgroundColor = `hsl(${colorRnd}, ${percentRnd1}%, ${percentRnd2}%)`
     })
   })
-  square.forEach((el) => {
-    el.addEventListener('click', () => {
-      alert("Hey don't cheat! No clicking!")
-      window.location.href=window.location.href
-    })
-  })
+    // square.forEach((el) => {
+    //   if(gameOver) {
+    //     console.log('Game Over')
+    //     return
+    //   } else {
+    //     el.addEventListener('click', () => {
+    //       alert("Hey don't cheat! No clicking!")
+    //       window.location.href=window.location.href
+    //     })
+    //   }
+    // })
 }
 
 const loadLeaderBoard = (easyArr, normalArr, hardArr, eLen, nLen, hLen) => {
@@ -620,6 +632,8 @@ const buildBoard = async () => {
 
       const action = e.target.action
       const submitBtn = document.getElementById('submitBtn')
+      play.disabled = true
+      play.textContent = 'One more time'
       submitBtn.textContent = 'Sending...'
       submitBtn.disabled = true
       fetch(action, {
