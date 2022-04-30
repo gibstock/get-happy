@@ -5,7 +5,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="index.css">
-  <script type="module" src="index.js" defer></script>
+  <script src="index.js" defer></script>
   <title>Get Happy</title>
 </head>
 <body>
@@ -45,9 +45,71 @@
       <p id="mobileInstructions">Pick a difficulty and start swiping</p>
       <div id="high-scores">
         <h1 id="leaderboardHeader"></h1>
-        <ul id="scores">
-  
-        </ul>
+        <div class="upper">
+          <div class="header">
+            <h1>Leaderboard</h1>
+          </div>
+          <div class="movies" id="movies">
+            <div class="movie" data-movie="easyRank">
+              <div class="smiley"><h2>Easy</h2></div>
+            </div>
+            <div class="movie" data-movie="normalRank">
+              <div class="smiley"><h2>Normal</h2></div>
+            </div>
+            <div class="movie" data-movie="hardRank">
+              <div class="smiley"><h2>Hard</h2></div>
+            </div>
+          </div>
+        </div>
+        <div class="lower">
+          <div class="contentContainer">
+            <div class="content visible" id="easyRank">
+              <table>
+                <thead>
+                  <tr>
+                    <th>Rank</th>
+                    <th>Username</th>
+                    <th>Score</th>
+                    <!-- <th>Platform</th> -->
+                  </tr>
+                </thead>
+                <tbody id="easyTBody">
+                  
+                </tbody>
+              </table>
+            </div>
+            <div class="content" id="normalRank">
+              <table>
+                <thead>
+                  <tr>
+                    <th>Rank</th>
+                    <th>Username</th>
+                    <th>Score</th>
+                    <!-- <th>Platform</th> -->
+                  </tr>
+                </thead>
+                <tbody id="normalTBody">
+                  
+                </tbody>
+              </table>
+            </div>
+            <div class="content" id="hardRank">
+              <table>
+                <thead>
+                  <tr>
+                    <th>Rank</th>
+                    <th>Username</th>
+                    <th>Score</th>
+                    <!-- <th>Platform</th> -->
+                  </tr>
+                </thead>
+                <tbody id="hardTBody">
+                  
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
       </div>
     </aside>
     <main>

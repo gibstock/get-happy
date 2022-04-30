@@ -20,12 +20,22 @@ const scoreInput = document.getElementById('scoreInput')
 const instructions = document.getElementById('instructions')
 const extraTime = document.getElementById('extraTime')
 const counter = document.getElementById('counter')
+const moviesDiv = document.getElementById('movies')
+const movies = moviesDiv.querySelectorAll('.movie')
+
 const LEADERBOARD_URL = 'https://docs.google.com/spreadsheets/d/1EDHaR9mGXRL6GzFoPadh9dlbT0dqbawoGN5RRrpljBY/gviz/tq?tqx=out:json'
 const colors = ['red', 'green', 'purple', 'white', 'black', 'blue', 'pink']
 let count = 0
 let bonus = [false, false, false]
+let easyLen = 0
+let normalLen = 0
+let hardLen = 0
+let isMobile = false
+let isDesktop = false
 
-let scoresArray = []
+let easyScoresArray = []
+let normalScoresArray = []
+let hardScoresArray = []
 let colorSet = [
   {
     max: 30,
@@ -86,7 +96,6 @@ score.textContent = `Score: ${count}`
 
 const countDown = (timerFuncMin, timerFuncSec, setting) => {
   currentMode = setting
-  console.log(currentMode)
   let countdownTimer = setInterval(() => {
     if(timerFuncMin === 0 && timerFuncSec === 0) {
       clearInterval(countdownTimer)
@@ -404,39 +413,85 @@ const start = (timerFuncMin, timerFuncSec, difficulty, setting) => {
   })
 }
 
-const loadLeaderBoard = (arr, len) => {
-  let canvasHeight = canvas.getBoundingClientRect().height
+const loadLeaderBoard = (easyArr, normalArr, hardArr, eLen, nLen, hLen) => {
+  // let canvasHeight = canvas.getBoundingClientRect().height
   let colorRnd = Math.floor(Math.random() * 361)
   let percentRnd1 = Math.floor(Math.random() * 101)
   let percentRnd2 = Math.floor(Math.random() * (101 - 10) + 10)
-  arr.sort((a, b) => {
+  easyArr.sort((a, b) => {
+    return b.score - a.score
+  })
+  normalArr.sort((a, b) => {
+    return b.score - a.score
+  })
+  hardArr.sort((a, b) => {
     return b.score - a.score
   })
   let closeBtn = document.createElement('span')
+  const easyTBody = document.getElementById('easyTBody')
+  const normalTBody = document.getElementById('normalTBody')
+  const hardTBody = document.getElementById('hardTBody')
   closeBtn.textContent = '❌'
   closeBtn.style.position = 'absolute'
   closeBtn.style.top = '1em'
   closeBtn.style.right = '1em'
   closeBtn.style.cursor = 'pointer'
   highScores.style.backgroundColor = 'hsl(125, 25%, 0%)'
-  highScores.style.height = `${canvasHeight}px`
+  // highScores.style.height = `${canvasHeight}px`
+  highScores.style.height = `100vh`
   highScores.style.position = 'absolute'
   highScores.style.boxSizing = 'border-box'
-  highScores.style.top = '20%'
-  highScores.style.left = '50%'
-  highScores.style.transform = 'translateX(-50%)'
+  highScores.style.top = '0'
+  highScores.style.left = '0'
+  // highScores.style.transform = 'translateX(-50%)'
   highScores.style.flexFlow = 'column'
   highScores.style.color = 'white'
-  highScores.children[1].style.listStyle = 'none'
-  highScores.children[1].style.padding = 0
-  leaderboardHeader.textContent = 'Leaderboard'
+  // highScores.children[1].style.listStyle = 'none'
+  // highScores.children[1].style.padding = 0
+  // leaderboardHeader.textContent = 'Leaderboard'
   highScores.append(closeBtn)
-  for(let i = 0; i < len; i++) {
-    let li = document.createElement('li')
+  // for(let i = 0; i < len; i++) {
+  //   let li = document.createElement('li')
+  //   if(i === 0) {
+  //     li.innerHTML = `#${i+1} <span class="usrName">${arr[i].username}</span> scored ${arr[i].score} on ${arr[i].mode} mode 👑`
+  //   } else {
+  //     li.innerHTML = `#${i +1} <span class="usrName">${arr[i].username}</span> scored ${arr[i].score} on ${arr[i].mode} mode`
+  //   }
+  //   const usrNameClass = document.querySelectorAll('.usrName')
+  //   usrNameClass.forEach((span) => {
+  //     span.style.color = `hsl(${colorRnd}, ${percentRnd1}%, ${percentRnd2}%)`
+  //     if(colorRnd + 5 <= 360) {
+  //       colorRnd += 10
+  //     } else {
+  //       colorRnd = 0
+  //     }
+  //     if(percentRnd1 + 5 <= 100) {
+  //       percentRnd1 += 5
+  //     } else {
+  //       percentRnd1 = 50
+  //     }
+  //     if(percentRnd2 + 5 <= 90){
+  //       percentRnd2 += 5
+  //     } else {
+  //       percentRnd2 = 50
+  //     }
+  //   })
+  //   highScores.children[1].append(li)
+  // }
+  // EASY
+  for(let i = 0; i < eLen; i++) {
+    let tr = document.createElement('tr')
+    let rank = document.createElement('td')
+    let user = document.createElement('td')
+    let userScore = document.createElement('td')
     if(i === 0) {
-      li.innerHTML = `#${i+1} <span class="usrName">${arr[i].username}</span> scored ${arr[i].score} on ${arr[i].mode} mode 👑`
+      rank.textContent = `#${i+1}👑`
+      user.innerHTML = `<span class="usrName">${easyArr[i].username}</span>`
+      userScore.textContent = `${easyArr[i].score}`
     } else {
-      li.innerHTML = `#${i +1} <span class="usrName">${arr[i].username}</span> scored ${arr[i].score} on ${arr[i].mode} mode`
+      rank.textContent = `#${i+1}`
+      user.innerHTML = `<span class="usrName">${easyArr[i].username}</span>`
+      userScore.textContent = `${easyArr[i].score}`
     }
     const usrNameClass = document.querySelectorAll('.usrName')
     usrNameClass.forEach((span) => {
@@ -457,7 +512,88 @@ const loadLeaderBoard = (arr, len) => {
         percentRnd2 = 50
       }
     })
-    highScores.children[1].append(li)
+    tr.append(rank)
+    tr.append(user)
+    tr.append(userScore)
+    easyTBody.append(tr)
+  }
+  // Normal
+  for(let i = 0; i < nLen; i++) {
+    let tr = document.createElement('tr')
+    let rank = document.createElement('td')
+    let user = document.createElement('td')
+    let userScore = document.createElement('td')
+    if(i === 0) {
+      rank.textContent = `#${i+1}👑`
+      user.innerHTML = `<span class="usrName">${normalArr[i].username}</span>`
+      userScore.textContent = `${normalArr[i].score}`
+    } else {
+      rank.textContent = `#${i+1}`
+      user.innerHTML = `<span class="usrName">${normalArr[i].username}</span>`
+      userScore.textContent = `${normalArr[i].score}`
+    }
+    const usrNameClass = document.querySelectorAll('.usrName')
+    usrNameClass.forEach((span) => {
+      span.style.color = `hsl(${colorRnd}, ${percentRnd1}%, ${percentRnd2}%)`
+      if(colorRnd + 5 <= 360) {
+        colorRnd += 10
+      } else {
+        colorRnd = 0
+      }
+      if(percentRnd1 + 5 <= 100) {
+        percentRnd1 += 5
+      } else {
+        percentRnd1 = 50
+      }
+      if(percentRnd2 + 5 <= 90){
+        percentRnd2 += 5
+      } else {
+        percentRnd2 = 50
+      }
+    })
+    tr.append(rank)
+    tr.append(user)
+    tr.append(userScore)
+    normalTBody.append(tr)
+  }
+  // Hard
+  for(let i = 0; i < hLen; i++) {
+    let tr = document.createElement('tr')
+    let rank = document.createElement('td')
+    let user = document.createElement('td')
+    let userScore = document.createElement('td')
+    if(i === 0) {
+      rank.textContent = `#${i+1}👑`
+      user.innerHTML = `<span class="usrName">${hardArr[i].username}</span>`
+      userScore.textContent = `${hardArr[i].score}`
+    } else {
+      rank.textContent = `#${i+1}`
+      user.innerHTML = `<span class="usrName">${hardArr[i].username}</span>`
+      userScore.textContent = `${hardArr[i].score}`
+    }
+    const usrNameClass = document.querySelectorAll('.usrName')
+    usrNameClass.forEach((span) => {
+      span.style.color = `hsl(${colorRnd}, ${percentRnd1}%, ${percentRnd2}%)`
+      if(colorRnd + 5 <= 360) {
+        colorRnd += 10
+      } else {
+        colorRnd = 0
+      }
+      if(percentRnd1 + 5 <= 100) {
+        percentRnd1 += 5
+      } else {
+        percentRnd1 = 50
+      }
+      if(percentRnd2 + 5 <= 90){
+        percentRnd2 += 5
+      } else {
+        percentRnd2 = 50
+      }
+    })
+    tr.append(rank)
+    tr.append(user)
+    tr.append(userScore)
+    hardTBody.append(tr)
   }
   closeBtn.addEventListener('click', () => {
     highScores.style.display = 'none'
@@ -465,13 +601,35 @@ const loadLeaderBoard = (arr, len) => {
 }
 const createObj = (obj, objLen) => {
   for(let i = 0; i < objLen; i++) {
-    scoresArray[i] = {
-      username : obj[i].c[0].v,
-      mode: obj[i].c[1].v,
-      score: obj[i].c[2].v,
+    if(obj[i].c[1].v === 'Easy') {
+      easyScoresArray[i] = {
+        username : obj[i].c[0].v,
+        mode: obj[i].c[1].v,
+        score: obj[i].c[2].v,
+      }
+      easyLen++
     }
+    
+    if(obj[i].c[1].v === 'Normal') {
+      normalScoresArray[i] = {
+        username : obj[i].c[0].v,
+        mode: obj[i].c[1].v,
+        score: obj[i].c[2].v,
+      }
+      normalLen++
+    }
+    
+    if(obj[i].c[1].v === 'Hard') {
+      hardScoresArray[i] = {
+        username : obj[i].c[0].v,
+        mode: obj[i].c[1].v,
+        score: obj[i].c[2].v,
+      }
+      hardLen++
+    }
+    
   }
-  loadLeaderBoard(scoresArray, objLen)
+  loadLeaderBoard(easyScoresArray,normalScoresArray,hardScoresArray, easyLen, normalLen, hardLen)
 
 }
 
@@ -482,7 +640,12 @@ const buildBoard = async () => {
       let colStart = data.indexOf("cols") -2
       const result = (JSON.parse(data.slice(colStart, data.length - 3))).rows
       let resultLength = Object.keys(result).length // set length for dynamic variable rendering
-      
+      // const resultArray = Object.entries(result)
+      // console.log(resultArray)
+      // const easyFiltered = resultArray.filter(([key, value]) => value === 'Easy' )
+
+      // const easyResult = Object.fromEntries(easyFiltered)
+      // console.log(easyResult)
       createObj(result, resultLength)
 
 
@@ -512,10 +675,48 @@ const buildBoard = async () => {
 
 const leaderboardShow = () => {
   highScores.style.display = 'flex'
+  console.log(window.innerWidth * .25)
+console.log(typeof Number(getComputedStyle(highScores).width.substring(0,3)))
+
 
 }
 
 leaderBtn.addEventListener('click', leaderboardShow)
+
+const contentDivs = document.querySelectorAll('.content')
+
+moviesDiv.addEventListener('scroll', ()=> {
+  for (const movie of movies) {
+    if(isMobile) {
+      if(movie.getBoundingClientRect().left <= window.innerWidth * 0.75  && movie.getBoundingClientRect().left > 0) {
+        movie.classList.add('visible')
+        handleContentChange(movie.dataset.movie)
+      } else {
+        movie.classList.remove('visible')
+      }
+    } else {
+      console.log(movie.getBoundingClientRect().left, getComputedStyle(highScores).width)
+      if(movie.getBoundingClientRect().left <= Number(getComputedStyle(highScores).width.substring(0,3)) * 0.75  && movie.getBoundingClientRect().left > 0) {
+        movie.classList.add('visible')
+        handleContentChange(movie.dataset.movie)
+      } else {
+        movie.classList.remove('visible')
+      }
+    }
+  }
+})
+
+const handleContentChange = id => {
+  console.log(id)
+  if(!id) return
+
+  for( const contentDiv of contentDivs) {
+    contentDiv.classList.remove('visible')
+  }
+
+  document.getElementById(id).classList.add('visible')
+
+}
 
 easy.addEventListener('click', () => {
   easy.textContent = 'GO!'
@@ -528,8 +729,10 @@ easy.addEventListener('click', () => {
   hard.style.visibility = 'hidden'
   if(/Android|Pixel|iPhone|iPad|iPod/i.test(navigator.userAgent)){
     mobileInstruction.style.display = 'flex'
+    isMobile = true
     mobileStart(2, 0o0, 4, 'Easy')
   } else {
+    isDesktop = true
     start(2, 0o0, 4, 'Easy')
   }
 })
@@ -545,8 +748,10 @@ normal.addEventListener('click', () => {
   easy.style.visibility = 'hidden'
   if(/Android|Pixel|iPhone|iPad|iPod/i.test(navigator.userAgent)){
     mobileInstruction.style.display = 'flex'
+    isMobile = true
     mobileStart(1, 0o0, 7, 'Normal')
   } else {
+    isDesktop = true
     start(1, 0o0, 7, 'Normal')
   }
 })
@@ -560,8 +765,10 @@ hard.addEventListener('click', () => {
   easy.style.visibility = 'hidden'
   if(/Android|Pixel|iPhone|iPad|iPod/i.test(navigator.userAgent)){
     mobileInstruction.style.display = 'flex'
+    isMobile = true
     mobileStart(0, 30, 13, 'Hard')
   } else {
+    isDesktop = true
     start(0, 30, 13, 'Hard')
   }
 })

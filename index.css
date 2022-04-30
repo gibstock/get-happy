@@ -72,11 +72,11 @@ button:hover {
   padding: 1em;
 }
 #high-scores {
-  padding: 1em;
+  /* padding: 1em; */
   display: none;
-  width: 100vw;
-  overflow: scroll;
-  scroll-behavior: smooth;
+  width: 100%;
+  /* overflow: scroll; */
+  /* scroll-behavior: smooth; */
 }
 #leaderForm h3 {
   color: white;
@@ -154,6 +154,83 @@ main > p {
   transition: all 2s;
 }
 
+/* TABLE CSS  */
+.upper {
+  height: 20vh;
+  overflow: hidden;
+  margin-bottom: 5vh;
+}
+.movies {
+  display: flex;
+  overflow-x: scroll;
+  scroll-snap-type: x mandatory;
+  scroll-padding: 0 30px;
+}
+.movies::-webkit-scrollbar {
+  display: none;
+}
+.movie{
+  width: 300px;
+  /* height: 350px; */
+  flex-shrink: 0;
+  border-top-right-radius: 30px;
+  border-top-left-radius: 30px;
+  overflow: hidden;
+  scroll-snap-align: start;
+  margin: 0 15px;
+}
+.lower {
+  height: 70vh;
+}
+.header {
+  padding: 1em;
+  text-align: center;
+  color: white;
+}
+
+.smiley {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  background-color: hsl(210, 40%, 50%);
+  /* border-radius: 25px; */
+  border: 1px solid gray;
+}
+.smiley h2 {
+  text-align: center;
+  color: white;
+}
+.contentContainer {
+  position: relative;
+  background: hsl(210, 5%, 10%);
+  border-top-left-radius: 30px;
+  border-top-right-radius: 30px;
+  height: 100%;
+  box-sizing: border-box;
+}
+.content {
+  box-sizing: border-box;
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  position: absolute;
+  padding: 15px;
+  opacity: 0;
+  pointer-events: none;
+  transition: all 0.2s ease-in-out;
+  color: white;
+}
+.content.visible {
+  opacity: 1;
+  pointer-events: visible;
+}
+table {
+  width: 100%;
+}
+th {
+  text-align: left;
+}
+
 
 
 @media screen and (min-width: 600px) {
@@ -190,6 +267,6 @@ main > p {
     align-self: center;
   }
   #high-scores {
-    width: 60%;
+    width: 390px;
   }
 }
