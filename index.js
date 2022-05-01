@@ -610,6 +610,10 @@ const createObj = (obj, objLen) => {
     }
     
   }
+  if(easyLen > 20) easyLen = 20
+  if(normalLen > 20) normalLen = 20
+  if(hardLen > 20) hardLen = 20
+  
   loadLeaderBoard(easyScoresArray,normalScoresArray,hardScoresArray, easyLen, normalLen, hardLen)
 
 }
@@ -620,7 +624,7 @@ const buildBoard = async () => {
     .then(data => {
       let colStart = data.indexOf("cols") -2
       const result = (JSON.parse(data.slice(colStart, data.length - 3))).rows
-      let resultLength = Object.keys(result).length // set length for dynamic variable rendering
+      let resultLength = Object.keys(result).length
       createObj(result, resultLength)
     })
 
