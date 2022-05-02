@@ -832,5 +832,9 @@ play.addEventListener('click', () => {
   window.location.href=window.location.href
 })
 window.addEventListener("DOMContentLoaded", ()=>{
+  window.scrollBy({
+    top: window.innerHeight, 
+    left: 0,
+    behavior: "smooth"})
   buildBoard()
 })
