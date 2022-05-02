@@ -138,6 +138,8 @@ main > p {
   height: 50vh;
   margin: auto;
   border: 1px solid black;
+  background-color: hsla(210, 80%, 5%, .09);
+  box-shadow: inset 0 0 20px hsla(210, 80%, 5%, .5);
 }
 
 #score, #counter {
