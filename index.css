@@ -24,6 +24,7 @@ body::before {
   left: 0;
   opacity: .05;
   background-image: url('src/img/happy-face-3.png');
+  z-index: -1;
 }
 #main-wrapper {
   display: flex;
