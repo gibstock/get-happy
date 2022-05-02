@@ -210,6 +210,10 @@ const mobileStart = (timerFuncMin, timerFuncSec, difficulty, setting) => {
     let colorRnd = Math.floor(Math.random() * (colorSet[rndTheme].max - colorSet[rndTheme].min) + colorSet[rndTheme].min)
     let percentRnd1 = Math.floor(Math.random() * (101-20) + 20)
     let percentRnd2 = Math.floor(Math.random() * (91-20) + 20)
+    const flashy1 = document.createElement('div')
+    const flashy2 = document.createElement('div')
+    flashy1.classList.add('flash1')
+    flashy2.classList.add('flash2')
     div.style.outline = '1px solid red'
     div.style.boxShadow = '5px 5px 5px 2px hsla(210, 50%, 30%, .9)'
     div.style.position = 'relative'
@@ -224,9 +228,15 @@ const mobileStart = (timerFuncMin, timerFuncSec, difficulty, setting) => {
       score.textContent = `Score: ${count}`
     }else if((rnd === 6 || rnd === 2) && !div.matches('.happy')) {
       div.classList.add('happy')
-      // div.append(document.querySelector('.flash'))
+      div.append(flashy1)
+      div.append(flashy2)
       count += 1
       score.textContent = `Score: ${count}`
+      setTimeout(()=> {
+        div.removeChild(flashy1)
+        div.removeChild(flashy2)
+      }, 1000)
+
     } else div.style.backgroundColor = `hsl(${colorRnd}, ${percentRnd1}%, ${percentRnd2}%)`
   }
   let x = Math.floor(Math.random() * 101)
