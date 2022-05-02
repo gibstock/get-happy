@@ -103,7 +103,7 @@ const countDown = (timerFuncMin, timerFuncSec, setting) => {
       clearInterval(countdownTimer)
       gameOver = true
       square.forEach((el) => {
-        if(el.textContent !== '🤩') {
+        if(el.matches('.happy')) {
           el.style.opacity = '.08'
         }else {
           el.style.opacity = '.1'
@@ -212,8 +212,12 @@ const mobileStart = (timerFuncMin, timerFuncSec, difficulty, setting) => {
     let percentRnd2 = Math.floor(Math.random() * (91-20) + 20)
     const flashy1 = document.createElement('div')
     const flashy2 = document.createElement('div')
+    const flashy3 = document.createElement('div')
+    const flashy4 = document.createElement('div')
     flashy1.classList.add('flash1')
     flashy2.classList.add('flash2')
+    flashy3.classList.add('flash3')
+    flashy4.classList.add('flash4')
     div.style.outline = '1px solid red'
     div.style.boxShadow = '5px 5px 5px 2px hsla(210, 50%, 30%, .9)'
     div.style.position = 'relative'
@@ -224,8 +228,14 @@ const mobileStart = (timerFuncMin, timerFuncSec, difficulty, setting) => {
     } else if(div.matches('.happy')) {
       div.classList.remove('happy')
       div.classList.add('sad')
+      div.append(flashy3)
+      div.append(flashy4)
       count -= 1
       score.textContent = `Score: ${count}`
+      setTimeout(()=> {
+        div.removeChild(flashy3)
+        div.removeChild(flashy4)
+      }, 1000)
     }else if((rnd === 6 || rnd === 2) && !div.matches('.happy')) {
       div.classList.add('happy')
       div.append(flashy1)
