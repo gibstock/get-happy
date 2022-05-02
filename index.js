@@ -215,14 +215,16 @@ const mobileStart = (timerFuncMin, timerFuncSec, difficulty, setting) => {
     div.style.position = 'relative'
     div.style.zIndex = 1
 
-    if(div.textContent === '☹' ){
+    if(div.matches('.sad')){
       return;
-    } else if(div.textContent === '🤩') {
-      div.textContent = '☹'
+    } else if(div.matches('.happy')) {
+      div.classList.remove('happy')
+      div.classList.add('sad')
       count -= 1
       score.textContent = `Score: ${count}`
-    }else if((rnd === 6 || rnd === 2) && div.textContent !== '🤩') {
-      div.textContent = '🤩'
+    }else if((rnd === 6 || rnd === 2) && !div.matches('.happy')) {
+      div.classList.add('happy')
+      // div.append(document.querySelector('.flash'))
       count += 1
       score.textContent = `Score: ${count}`
     } else div.style.backgroundColor = `hsl(${colorRnd}, ${percentRnd1}%, ${percentRnd2}%)`
@@ -613,7 +615,7 @@ const createObj = (obj, objLen) => {
   if(easyLen > 20) easyLen = 20
   if(normalLen > 20) normalLen = 20
   if(hardLen > 20) hardLen = 20
-  
+
   loadLeaderBoard(easyScoresArray,normalScoresArray,hardScoresArray, easyLen, normalLen, hardLen)
 
 }
@@ -627,6 +629,8 @@ const buildBoard = async () => {
       let resultLength = Object.keys(result).length
       createObj(result, resultLength)
     })
+
+
 
     form.addEventListener('submit', (e) => {
       e.preventDefault()
@@ -649,6 +653,12 @@ const buildBoard = async () => {
         window.location.href=window.location.href
       })
     })
+}
+
+document.getElementById('usernameInput').onkeydown = (e) => {
+  if(/=/.test(e.key)) {
+    return false
+  }
 }
 
 const leaderboardShow = () => {
