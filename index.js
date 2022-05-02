@@ -318,7 +318,7 @@ const mobileStart = (timerFuncMin, timerFuncSec, difficulty, setting) => {
     if(setting === 'Hard'){
       if(startingX+20 < movingX) {
         mobileTarget.style.outline = 'none'
-        // mobileTarget.style.boxShadow = 'none'
+        mobileTarget.style.boxShadow = 'none'
         mobileTarget.style.zIndex = '0'
         if(square[x + 1] === undefined) {
           x = x - 9
@@ -334,7 +334,7 @@ const mobileStart = (timerFuncMin, timerFuncSec, difficulty, setting) => {
       }else if(startingX-20 > movingX) {
         //LEFT
         mobileTarget.style.outline = 'none'
-        // mobileTarget.style.boxShadow = 'none'
+        mobileTarget.style.boxShadow = 'none'
         mobileTarget.style.zIndex = '0'
   
         if(square[x - 1] === undefined) {
@@ -352,7 +352,7 @@ const mobileStart = (timerFuncMin, timerFuncSec, difficulty, setting) => {
       if(startingY+20 < movingY) {
         // DOWN
         mobileTarget.style.outline = 'none'
-        // mobileTarget.style.boxShadow = 'none'
+        mobileTarget.style.boxShadow = 'none'
         mobileTarget.style.zIndex = '0'
   
         if(square[x + 10] === undefined) {
@@ -366,7 +366,7 @@ const mobileStart = (timerFuncMin, timerFuncSec, difficulty, setting) => {
       } else if(startingY-20 > movingY) {
         // UP
         mobileTarget.style.outline = 'none'
-        // mobileTarget.style.boxShadow = 'none'
+        mobileTarget.style.boxShadow = 'none'
         mobileTarget.style.zIndex = '0'
   
         if(square[x - 10] === undefined) {
@@ -382,7 +382,7 @@ const mobileStart = (timerFuncMin, timerFuncSec, difficulty, setting) => {
     } else {
       if(startingX+75 < movingX) {
         mobileTarget.style.outline = 'none'
-        // mobileTarget.style.boxShadow = 'none'
+        mobileTarget.style.boxShadow = 'none'
         mobileTarget.style.zIndex = '0'
         if(square[x + 1] === undefined) {
           x = x - 9
@@ -398,7 +398,7 @@ const mobileStart = (timerFuncMin, timerFuncSec, difficulty, setting) => {
       }else if(startingX-75 > movingX) {
         //LEFT
         mobileTarget.style.outline = 'none'
-        // mobileTarget.style.boxShadow = 'none'
+        mobileTarget.style.boxShadow = 'none'
         mobileTarget.style.zIndex = '0'
   
         if(square[x - 1] === undefined) {
@@ -416,7 +416,7 @@ const mobileStart = (timerFuncMin, timerFuncSec, difficulty, setting) => {
       if(startingY+75 < movingY) {
         // DOWN
         mobileTarget.style.outline = 'none'
-        // mobileTarget.style.boxShadow = 'none'
+        mobileTarget.style.boxShadow = 'none'
         mobileTarget.style.zIndex = '0'
   
         if(square[x + 10] === undefined) {
@@ -430,7 +430,7 @@ const mobileStart = (timerFuncMin, timerFuncSec, difficulty, setting) => {
       } else if(startingY-75 > movingY) {
         // UP
         mobileTarget.style.outline = 'none'
-        // mobileTarget.style.boxShadow = 'none'
+        mobileTarget.style.boxShadow = 'none'
         mobileTarget.style.zIndex = '0'
   
         if(square[x - 10] === undefined) {
