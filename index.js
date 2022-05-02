@@ -199,56 +199,101 @@ const countDown = (timerFuncMin, timerFuncSec, setting) => {
   
   }, 1000)
 }
+const colorSquare = (div, difficulty) => {
+  console.log("difficulty", difficulty)
+  let rnd = Math.floor(Math.random() * difficulty)
+  let colorRnd = Math.floor(Math.random() * (colorSet[rndTheme].max - colorSet[rndTheme].min) + colorSet[rndTheme].min)
+  let percentRnd1 = Math.floor(Math.random() * (101-20) + 20)
+  let percentRnd2 = Math.floor(Math.random() * (91-20) + 20)
+  const flashy1 = document.createElement('div')
+  const flashy2 = document.createElement('div')
+  const flashy3 = document.createElement('div')
+  const flashy4 = document.createElement('div')
+  flashy1.classList.add('flash1')
+  flashy2.classList.add('flash2')
+  flashy3.classList.add('flash3')
+  flashy4.classList.add('flash4')
+  div.style.outline = '1px solid red'
+  div.style.boxShadow = '5px 5px 5px 2px hsla(210, 50%, 30%, .9)'
+  div.style.position = 'relative'
+  div.style.zIndex = 1
 
+  if(div.matches('.sad')){
+    return;
+  } else if(div.matches('.happy')) {
+    div.classList.remove('happy')
+    div.classList.add('sad')
+    div.append(flashy3)
+    div.append(flashy4)
+    count -= 1
+    score.textContent = `Score: ${count}`
+    setTimeout(()=> {
+      div.removeChild(flashy3)
+      div.removeChild(flashy4)
+    }, 1000)
+  }else if((rnd === 6 || rnd === 2) && !div.matches('.happy')) {
+    div.classList.add('happy')
+    div.append(flashy1)
+    div.append(flashy2)
+    count += 1
+    score.textContent = `Score: ${count}`
+    setTimeout(()=> {
+      div.removeChild(flashy1)
+      div.removeChild(flashy2)
+    }, 1000)
+
+  } else div.style.backgroundColor = `hsl(${colorRnd}, ${percentRnd1}%, ${percentRnd2}%)`
+}
 
 const mobileStart = (timerFuncMin, timerFuncSec, difficulty, setting) => {
+  console.log("setting", setting)
   let startingX, startingY, movingX, movingY;
   countDown(timerFuncMin, timerFuncSec, setting)
 
-  const colorSquare = (div) => {
-    let rnd = Math.floor(Math.random() * difficulty)
-    let colorRnd = Math.floor(Math.random() * (colorSet[rndTheme].max - colorSet[rndTheme].min) + colorSet[rndTheme].min)
-    let percentRnd1 = Math.floor(Math.random() * (101-20) + 20)
-    let percentRnd2 = Math.floor(Math.random() * (91-20) + 20)
-    const flashy1 = document.createElement('div')
-    const flashy2 = document.createElement('div')
-    const flashy3 = document.createElement('div')
-    const flashy4 = document.createElement('div')
-    flashy1.classList.add('flash1')
-    flashy2.classList.add('flash2')
-    flashy3.classList.add('flash3')
-    flashy4.classList.add('flash4')
-    div.style.outline = '1px solid red'
-    div.style.boxShadow = '5px 5px 5px 2px hsla(210, 50%, 30%, .9)'
-    div.style.position = 'relative'
-    div.style.zIndex = 1
+  // const colorSquare = (div) => {
+  //   let rnd = Math.floor(Math.random() * difficulty)
+  //   let colorRnd = Math.floor(Math.random() * (colorSet[rndTheme].max - colorSet[rndTheme].min) + colorSet[rndTheme].min)
+  //   let percentRnd1 = Math.floor(Math.random() * (101-20) + 20)
+  //   let percentRnd2 = Math.floor(Math.random() * (91-20) + 20)
+  //   const flashy1 = document.createElement('div')
+  //   const flashy2 = document.createElement('div')
+  //   const flashy3 = document.createElement('div')
+  //   const flashy4 = document.createElement('div')
+  //   flashy1.classList.add('flash1')
+  //   flashy2.classList.add('flash2')
+  //   flashy3.classList.add('flash3')
+  //   flashy4.classList.add('flash4')
+  //   div.style.outline = '1px solid red'
+  //   div.style.boxShadow = '5px 5px 5px 2px hsla(210, 50%, 30%, .9)'
+  //   div.style.position = 'relative'
+  //   div.style.zIndex = 1
 
-    if(div.matches('.sad')){
-      return;
-    } else if(div.matches('.happy')) {
-      div.classList.remove('happy')
-      div.classList.add('sad')
-      div.append(flashy3)
-      div.append(flashy4)
-      count -= 1
-      score.textContent = `Score: ${count}`
-      setTimeout(()=> {
-        div.removeChild(flashy3)
-        div.removeChild(flashy4)
-      }, 1000)
-    }else if((rnd === 6 || rnd === 2) && !div.matches('.happy')) {
-      div.classList.add('happy')
-      div.append(flashy1)
-      div.append(flashy2)
-      count += 1
-      score.textContent = `Score: ${count}`
-      setTimeout(()=> {
-        div.removeChild(flashy1)
-        div.removeChild(flashy2)
-      }, 1000)
+  //   if(div.matches('.sad')){
+  //     return;
+  //   } else if(div.matches('.happy')) {
+  //     div.classList.remove('happy')
+  //     div.classList.add('sad')
+  //     div.append(flashy3)
+  //     div.append(flashy4)
+  //     count -= 1
+  //     score.textContent = `Score: ${count}`
+  //     setTimeout(()=> {
+  //       div.removeChild(flashy3)
+  //       div.removeChild(flashy4)
+  //     }, 1000)
+  //   }else if((rnd === 6 || rnd === 2) && !div.matches('.happy')) {
+  //     div.classList.add('happy')
+  //     div.append(flashy1)
+  //     div.append(flashy2)
+  //     count += 1
+  //     score.textContent = `Score: ${count}`
+  //     setTimeout(()=> {
+  //       div.removeChild(flashy1)
+  //       div.removeChild(flashy2)
+  //     }, 1000)
 
-    } else div.style.backgroundColor = `hsl(${colorRnd}, ${percentRnd1}%, ${percentRnd2}%)`
-  }
+  //   } else div.style.backgroundColor = `hsl(${colorRnd}, ${percentRnd1}%, ${percentRnd2}%)`
+  // }
   let x = Math.floor(Math.random() * 101)
   let mobileTarget = square[x]
   mobileTarget.style.outline = '1px solid red'
@@ -273,7 +318,7 @@ const mobileStart = (timerFuncMin, timerFuncSec, difficulty, setting) => {
     if(setting === 'Hard'){
       if(startingX+20 < movingX) {
         mobileTarget.style.outline = 'none'
-        mobileTarget.style.boxShadow = 'none'
+        // mobileTarget.style.boxShadow = 'none'
         mobileTarget.style.zIndex = '0'
         if(square[x + 1] === undefined) {
           x = x - 9
@@ -285,11 +330,11 @@ const mobileStart = (timerFuncMin, timerFuncSec, difficulty, setting) => {
           x = x + 1
           mobileTarget = square[x]
         }
-        colorSquare(mobileTarget)
+        colorSquare(mobileTarget, difficulty)
       }else if(startingX-20 > movingX) {
         //LEFT
         mobileTarget.style.outline = 'none'
-        mobileTarget.style.boxShadow = 'none'
+        // mobileTarget.style.boxShadow = 'none'
         mobileTarget.style.zIndex = '0'
   
         if(square[x - 1] === undefined) {
@@ -302,12 +347,12 @@ const mobileStart = (timerFuncMin, timerFuncSec, difficulty, setting) => {
           x = x - 1
           mobileTarget = square[x]
         }
-        colorSquare(mobileTarget)
+        colorSquare(mobileTarget, difficulty)
       }
       if(startingY+20 < movingY) {
         // DOWN
         mobileTarget.style.outline = 'none'
-        mobileTarget.style.boxShadow = 'none'
+        // mobileTarget.style.boxShadow = 'none'
         mobileTarget.style.zIndex = '0'
   
         if(square[x + 10] === undefined) {
@@ -317,11 +362,11 @@ const mobileStart = (timerFuncMin, timerFuncSec, difficulty, setting) => {
           x = x + 10
           mobileTarget = square[x]
         }
-        colorSquare(mobileTarget)
+        colorSquare(mobileTarget, difficulty)
       } else if(startingY-20 > movingY) {
         // UP
         mobileTarget.style.outline = 'none'
-        mobileTarget.style.boxShadow = 'none'
+        // mobileTarget.style.boxShadow = 'none'
         mobileTarget.style.zIndex = '0'
   
         if(square[x - 10] === undefined) {
@@ -331,13 +376,13 @@ const mobileStart = (timerFuncMin, timerFuncSec, difficulty, setting) => {
           x = x - 10
           mobileTarget = square[x]
         }
-        colorSquare(mobileTarget)
+        colorSquare(mobileTarget, difficulty)
       }
 
     } else {
       if(startingX+75 < movingX) {
         mobileTarget.style.outline = 'none'
-        mobileTarget.style.boxShadow = 'none'
+        // mobileTarget.style.boxShadow = 'none'
         mobileTarget.style.zIndex = '0'
         if(square[x + 1] === undefined) {
           x = x - 9
@@ -349,11 +394,11 @@ const mobileStart = (timerFuncMin, timerFuncSec, difficulty, setting) => {
           x = x + 1
           mobileTarget = square[x]
         }
-        colorSquare(mobileTarget)
+        colorSquare(mobileTarget, difficulty)
       }else if(startingX-75 > movingX) {
         //LEFT
         mobileTarget.style.outline = 'none'
-        mobileTarget.style.boxShadow = 'none'
+        // mobileTarget.style.boxShadow = 'none'
         mobileTarget.style.zIndex = '0'
   
         if(square[x - 1] === undefined) {
@@ -366,12 +411,12 @@ const mobileStart = (timerFuncMin, timerFuncSec, difficulty, setting) => {
           x = x - 1
           mobileTarget = square[x]
         }
-        colorSquare(mobileTarget)
+        colorSquare(mobileTarget, difficulty)
       }
       if(startingY+75 < movingY) {
         // DOWN
         mobileTarget.style.outline = 'none'
-        mobileTarget.style.boxShadow = 'none'
+        // mobileTarget.style.boxShadow = 'none'
         mobileTarget.style.zIndex = '0'
   
         if(square[x + 10] === undefined) {
@@ -381,11 +426,11 @@ const mobileStart = (timerFuncMin, timerFuncSec, difficulty, setting) => {
           x = x + 10
           mobileTarget = square[x]
         }
-        colorSquare(mobileTarget)
+        colorSquare(mobileTarget, difficulty)
       } else if(startingY-75 > movingY) {
         // UP
         mobileTarget.style.outline = 'none'
-        mobileTarget.style.boxShadow = 'none'
+        // mobileTarget.style.boxShadow = 'none'
         mobileTarget.style.zIndex = '0'
   
         if(square[x - 10] === undefined) {
@@ -395,7 +440,7 @@ const mobileStart = (timerFuncMin, timerFuncSec, difficulty, setting) => {
           x = x - 10
           mobileTarget = square[x]
         }
-        colorSquare(mobileTarget)
+        colorSquare(mobileTarget, difficulty)
       }
 
     }
@@ -415,24 +460,32 @@ const mobileStart = (timerFuncMin, timerFuncSec, difficulty, setting) => {
 const start = (timerFuncMin, timerFuncSec, difficulty, setting) => {
   instructions.textContent = '(Hint: drag the mouse across the square)'
   countDown(timerFuncMin, timerFuncSec, setting)
-
   square.forEach((el) => {
-    el.addEventListener('mouseover', () => {
-      let rnd = Math.floor(Math.random() * difficulty)
-      let colorRnd = Math.floor(Math.random() * (220 - 150) + 150)
-      let percentRnd1 = Math.floor(Math.random() * (101-20) + 20)
-      let percentRnd2 = Math.floor(Math.random() * (91-20) + 20)
-      if(el.textContent === '☹' ){
-        return;
-      } else if(el.textContent === '🤩') {
-        el.textContent = '☹'
-        count -= 1
-        score.textContent = `Score: ${count}`
-      }else if((rnd === 6 || rnd === 2) && el.textContent !== '🤩') {
-        el.textContent = '🤩'
-        count += 1
-        score.textContent = `Score: ${count}`
-      } else el.style.backgroundColor = `hsl(${colorRnd}, ${percentRnd1}%, ${percentRnd2}%)`
+    el.addEventListener('mouseenter', (e) => {
+      // console.log(e.target.previousSibling)
+      let deskTarget = e.target;
+      // prevSquare = deskTarget;
+      // deskTarget.style.outline = "1px solid red"
+      // deskTarget.style.boxShadow = '5px 5px 5px 2px hsla(210, 50%, 30%, .9)'
+      colorSquare(deskTarget, difficulty)
+      // let rnd = Math.floor(Math.random() * difficulty)
+      // let colorRnd = Math.floor(Math.random() * (220 - 150) + 150)
+      // let percentRnd1 = Math.floor(Math.random() * (101-20) + 20)
+      // let percentRnd2 = Math.floor(Math.random() * (91-20) + 20)
+      // if(el.textContent === '☹' ){
+      //   return;
+      // } else if(el.textContent === '🤩') {
+      //   el.textContent = '☹'
+      //   count -= 1
+      //   score.textContent = `Score: ${count}`
+      // }else if((rnd === 6 || rnd === 2) && el.textContent !== '🤩') {
+      //   el.textContent = '🤩'
+      //   count += 1
+      //   score.textContent = `Score: ${count}`
+      // } else el.style.backgroundColor = `hsl(${colorRnd}, ${percentRnd1}%, ${percentRnd2}%)`
+    })
+    el.addEventListener('mouseout', (e) => {
+      e.target.style.outline = 'none'
     })
   })
     // square.forEach((el) => {
