@@ -697,6 +697,25 @@ const handleContentChange = id => {
   document.getElementById(id).classList.add('visible')
 
 }
+
+// TEST //
+
+const nav = document.querySelector('nav')
+const shareData = {
+  title: 'Happy Faces',
+  text: 'Play Happy Faces Online For Free!',
+  url: 'https://get-happy.netlify.app'
+}
+nav.addEventListener('click', async () => {
+  try {
+    await navigator.share(shareData)
+    console.log('Successfully sent')
+  } catch(err) {
+    console.log(err)
+  }
+})
+
+/////////
 easy.addEventListener('click', () => {
   easy.textContent = 'GO!'
   easy.style.border = '2px solid hsla(210, 50%, 90%, .8)'

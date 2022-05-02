@@ -28,6 +28,11 @@ body::before {
   background-image: url('src/img/happy-face-3.png');
   z-index: -1;
 }
+nav {
+  width: 2em;
+  height: 1em;
+  outline: .5px solid blue;
+}
 #main-wrapper {
   display: flex;
   flex-flow: column-reverse;
