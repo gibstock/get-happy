@@ -23,6 +23,7 @@ const counter = document.getElementById('counter')
 const moviesDiv = document.getElementById('movies')
 const movies = moviesDiv.querySelectorAll('.movie')
 const timesep = document.getElementById('timeSep')
+const btnShare = document.getElementById('btnShare')
 
 const LEADERBOARD_URL = 'https://docs.google.com/spreadsheets/d/1EDHaR9mGXRL6GzFoPadh9dlbT0dqbawoGN5RRrpljBY/gviz/tq?tqx=out:json'
 const colors = ['red', 'green', 'purple', 'white', 'black', 'blue', 'pink']
@@ -138,6 +139,7 @@ const countDown = (timerFuncMin, timerFuncSec, setting) => {
         play.style.zIndex = 99
         displayBox.append(play)
       })
+
     } else if(timerFuncMin !== 0 && timerFuncSec === 0) {
       timerFuncMin--
       timerFuncSec = 59
@@ -700,32 +702,21 @@ const handleContentChange = id => {
 
 // TEST //
 
-const nav = document.querySelector('nav')
 
-nav.addEventListener('click', async () => {
-  try {
-    const dataUrl = canvas.toDataURL();
-    const blob = await (await fetch(dataUrl)).blob();
-    const filesArray = [
-      new File(
-        [blob],
-        'happyCanvs.png',
-        {
-          type: blob.type,
-          lastModified: new Date().getTime()
-        }
-      )
-    ];
-    const shareData = {
-      title: 'Happy Faces',
-      text: 'Play Happy Faces Online For Free!',
-      url: 'https://get-happy.netlify.app',
-      files: filesArray,
-    };
-    await navigator.share(shareData)
-    console.log('Successfully sent')
-  } catch(err) {
-    console.log(err)
+// const nav = document.querySelector('nav')
+
+btnShare.addEventListener('click', async () => {
+  if(navigator.share) {
+    navigator.share({
+      title: 'Get Happy Faces, Be Awesome ',
+      text: `I got ${count} playing Get Happy Faces, can you beat my score?!`,
+      url: 'https://get-happy.netlify.app'
+    }).then(() => {
+      console.log('Thanks for sharing!');
+    })
+    .catch(console.error);
+  } else {
+
   }
 })
 
