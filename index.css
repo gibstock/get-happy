@@ -296,6 +296,12 @@ th {
   background-repeat: no-repeat;
   background-size: contain;
 }
+.alien-woman {
+  background-image: url('src/img/alien-woman.png');
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: contain;
+}
 .flash1 {
   position: absolute;
   width: 100%;

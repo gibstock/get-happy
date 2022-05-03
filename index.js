@@ -202,7 +202,8 @@ const countDown = (timerFuncMin, timerFuncSec, setting) => {
   }, 1000)
 }
 const colorSquare = (div, difficulty) => {
-  console.log("difficulty", difficulty)
+  let randomAlien = Math.floor(Math.random() * 30)
+  console.log("randomAlien", randomAlien)
   let rnd = Math.floor(Math.random() * difficulty)
   let colorRnd = Math.floor(Math.random() * (colorSet[rndTheme].max - colorSet[rndTheme].min) + colorSet[rndTheme].min)
   let percentRnd1 = Math.floor(Math.random() * (101-20) + 20)
@@ -244,6 +245,16 @@ const colorSquare = (div, difficulty) => {
       div.removeChild(flashy2)
     }, 1000)
 
+  } else if(( randomAlien === 38) && !div.matches('.happy')) {
+    div.classList.add('alien-woman')
+    div.append(flashy3)
+    div.append(flashy4)
+    count -= 2
+    score.textContent = `Score: ${count}`
+    setTimeout(()=> {
+      div.removeChild(flashy3)
+      div.removeChild(flashy4)
+    }, 1000)
   } else div.style.backgroundColor = `hsl(${colorRnd}, ${percentRnd1}%, ${percentRnd2}%)`
 }
 
