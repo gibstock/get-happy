@@ -701,13 +701,27 @@ const handleContentChange = id => {
 // TEST //
 
 const nav = document.querySelector('nav')
-const shareData = {
-  title: 'Happy Faces',
-  text: 'Play Happy Faces Online For Free!',
-  url: 'https://get-happy.netlify.app'
-}
+
 nav.addEventListener('click', async () => {
   try {
+    const dataUrl = canvas.toDataURL();
+    const blob = await (await fetch(dataUrl)).blob();
+    const filesArray = [
+      new File(
+        [blob],
+        'happyCanvs.png',
+        {
+          type: blob.type,
+          lastModified: new Date().getTime()
+        }
+      )
+    ];
+    const shareData = {
+      title: 'Happy Faces',
+      text: 'Play Happy Faces Online For Free!',
+      url: 'https://get-happy.netlify.app',
+      files: filesArray,
+    };
     await navigator.share(shareData)
     console.log('Successfully sent')
   } catch(err) {
