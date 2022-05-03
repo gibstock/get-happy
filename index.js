@@ -94,7 +94,6 @@ let currSquare;
 let prevSquare;
 
 let rndTheme = Math.floor(Math.random() * (colorSet.length))
-console.log(rndTheme)
 score.textContent = `Score: ${count}`
 
 const countDown = (timerFuncMin, timerFuncSec, setting) => {
@@ -203,7 +202,6 @@ const countDown = (timerFuncMin, timerFuncSec, setting) => {
 }
 const colorSquare = (div, difficulty) => {
   let randomAlien = Math.floor(Math.random() * 30)
-  console.log("randomAlien", randomAlien)
   let rnd = Math.floor(Math.random() * difficulty)
   let colorRnd = Math.floor(Math.random() * (colorSet[rndTheme].max - colorSet[rndTheme].min) + colorSet[rndTheme].min)
   let percentRnd1 = Math.floor(Math.random() * (101-20) + 20)
@@ -259,7 +257,6 @@ const colorSquare = (div, difficulty) => {
 }
 
 const mobileStart = (timerFuncMin, timerFuncSec, difficulty, setting) => {
-  console.log("setting", setting)
   let startingX, startingY, movingX, movingY;
   countDown(timerFuncMin, timerFuncSec, setting)
   let x = Math.floor(Math.random() * 101)
