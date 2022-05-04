@@ -136,7 +136,9 @@ const countDown = (timerFuncMin, timerFuncSec, setting) => {
           displayBox.textContent = `Mind Blown. You got ${count} happies on ${setting} mode. You're elite.`
         }
         play.style.zIndex = 99
+        btnShare.style.zIndex = 98
         displayBox.append(play)
+        displayBox.append(btnShare)
       })
 
     } else if(timerFuncMin !== 0 && timerFuncSec === 0) {
@@ -717,7 +719,7 @@ btnShare.addEventListener('click', async () => {
   if(navigator.share) {
     navigator.share({
       title: 'Get Happy Faces, Be Awesome ',
-      text: `I got ${count} playing Get Happy Faces, can you beat my score?!`,
+      text: `I got ${count} playing Get Happy Faces on ${currentMode} mode, can you beat my score?!`,
       url: 'https://get-happy.netlify.app'
     }).then(() => {
       console.log('Thanks for sharing!');
