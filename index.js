@@ -93,6 +93,10 @@ let currentMode;
 let currSquare;
 let prevSquare;
 
+let finalBoard = [
+  
+]
+
 let rndTheme = Math.floor(Math.random() * (colorSet.length))
 score.textContent = `Score: ${count}`
 
@@ -103,6 +107,8 @@ const countDown = (timerFuncMin, timerFuncSec, setting) => {
       clearInterval(countdownTimer)
       gameOver = true
       square.forEach((el) => {
+        el.style.pointerEvents = 'none'
+        el.style.touchAction = 'none'
         if(el.matches('.happy')) {
           el.style.opacity = '.08'
         }else {
@@ -203,7 +209,8 @@ const countDown = (timerFuncMin, timerFuncSec, setting) => {
   }, 1000)
 }
 const colorSquare = (div, difficulty) => {
-  let randomAlien = Math.floor(Math.random() * 30)
+  let randomAlien = Math.floor(Math.random() * 100)
+  console.log(randomAlien)
   let rnd = Math.floor(Math.random() * difficulty)
   let colorRnd = Math.floor(Math.random() * (colorSet[rndTheme].max - colorSet[rndTheme].min) + colorSet[rndTheme].min)
   let percentRnd1 = Math.floor(Math.random() * (101-20) + 20)
@@ -221,7 +228,7 @@ const colorSquare = (div, difficulty) => {
   div.style.position = 'relative'
   div.style.zIndex = 1
 
-  if(div.matches('.sad')){
+  if(div.matches('.sad') || div.matches('.alien-woman')){
     return;
   } else if(div.matches('.happy')) {
     div.classList.remove('happy')
@@ -245,7 +252,7 @@ const colorSquare = (div, difficulty) => {
       div.removeChild(flashy2)
     }, 1000)
 
-  } else if(( randomAlien === 38) && !div.matches('.happy')) {
+  } else if(( randomAlien === 7) && !div.matches('.happy')) {
     div.classList.add('alien-woman')
     div.append(flashy3)
     div.append(flashy4)
