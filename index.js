@@ -210,7 +210,6 @@ const countDown = (timerFuncMin, timerFuncSec, setting) => {
 }
 const colorSquare = (div, difficulty) => {
   let randomAlien = Math.floor(Math.random() * 100)
-  console.log(randomAlien)
   let rnd = Math.floor(Math.random() * difficulty)
   let colorRnd = Math.floor(Math.random() * (colorSet[rndTheme].max - colorSet[rndTheme].min) + colorSet[rndTheme].min)
   let percentRnd1 = Math.floor(Math.random() * (101-20) + 20)
